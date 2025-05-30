@@ -1,0 +1,68 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2023",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@adit/lib/adit": [
+        "libs/adit/src"
+      ],
+      "@adit/lib/adit/*": [
+        "libs/adit/src/*"
+      ],
+      "@limitall/core/common": [
+        "libs/common/src"
+      ],
+      "@limitall/core/common/*": [
+        "libs/common/src/*"
+      ],
+      "@limitall/core/decorators": [
+        "libs/decorators/src"
+      ],
+      "@limitall/core/decorators/*": [
+        "libs/decorators/src/*"
+      ],
+      "@limitall/core/event": [
+        "libs/event/src"
+      ],
+      "@limitall/core/event/*": [
+        "libs/event/src/*"
+      ],
+      "@limitall/core/method-registry": [
+        "libs/method-registry/src"
+      ],
+      "@limitall/core/method-registry/*": [
+        "libs/method-registry/src/*"
+      ],
+      "@limitall/core/pulsar": [
+        "libs/pulsar/src"
+      ],
+      "@limitall/core/pulsar/*": [
+        "libs/pulsar/src/*"
+      ],
+      "@limitall/core/util": [
+        "libs/util/src"
+      ],
+      "@limitall/core/util/*": [
+        "libs/util/src/*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*"
+  ]
+}

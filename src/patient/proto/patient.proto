@@ -1,0 +1,18 @@
+
+// patient/patient.proto
+syntax = "proto3";
+
+package patient;
+
+service PatientesService {
+  rpc FindOne (PatientById) returns (Patient) {}
+}
+
+message PatientById {
+  string id = 1;
+}
+
+message Patient {
+  string id = 1;
+  string name = 2;
+}

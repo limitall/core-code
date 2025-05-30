@@ -1,0 +1,1 @@
+export * from './get-patient-by-id.query'
