@@ -48,6 +48,12 @@
       "@limitall/core/method-registry/*": [
         "libs/method-registry/src/*"
       ],
+      "@limitall/core/postgre": [
+        "libs/postgre/src"
+      ],
+      "@limitall/core/postgre/*": [
+        "libs/postgre/src/*"
+      ],
       "@limitall/core/pulsar": [
         "libs/pulsar/src"
       ],

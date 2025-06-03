@@ -14,10 +14,15 @@ export class PatientService extends CustomEventPublisher {
     constructor(
         private readonly commandBus: CommandBus,
         private readonly queryBus: QueryBus,
-        private readonly aditsrv: AditService,
     ) {
         super();
     }
+
+    @Db('patient')
+    db
+
+    @Db('patient')
+    db2() { }
 
     async create(payLoad: { name: string; email?: string; locId?: string; orgId?: string; }): Promise<string> {
         const command = new PatientCreateCommand(payLoad);
@@ -40,6 +45,8 @@ export class PatientService extends CustomEventPublisher {
         return isDeletd;
     }
     async getPatient(payLoad: { id: string; }) {
+        console.log("YYYYYYYYYYYYYYYYYYYY:::", this.db);
+        console.log("ZZZZZZZZZZZZZZZZz000:::", this.db2());
         const { id } = payLoad;
         const query = new GetPatientByIdQuery({ id });
         const patient = await this.queryBus.execute(query);

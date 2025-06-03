@@ -56,6 +56,15 @@
         "tsConfigPath": "libs/method-registry/tsconfig.lib.json"
       }
     },
+    "postgre": {
+      "type": "library",
+      "root": "libs/postgre",
+      "entryFile": "index",
+      "sourceRoot": "libs/postgre/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/postgre/tsconfig.lib.json"
+      }
+    },
     "pulsar": {
       "type": "library",
       "root": "libs/pulsar",

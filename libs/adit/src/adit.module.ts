@@ -2,6 +2,7 @@ import { DynamicModule, Global, Module, Type } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { EventSourcingModule, PostgresEventStore, PostgresSnapshotStore } from '@limitall/core/event';
 import { PulsarModule } from '@limitall/core/pulsar';
+import { PostgreModule } from '@limitall/core/postgre';
 import { AditService } from './adit.service';
 import { forRootAsyncOptionsType } from './adit.module.for-root-async-options.type';
 
@@ -34,7 +35,7 @@ export class AditModule {
               events: options?.events || [],
               eventStore: {
                 driver: PostgresEventStore,
-                host: '172.18.0.6',
+                host: '172.18.0.4',
                 port: 5432,
                 user: 'adit',
                 password: 'adit',
@@ -42,26 +43,14 @@ export class AditModule {
               },
               snapshotStore: {
                 driver: PostgresSnapshotStore,
-                host: '172.18.0.6',
+                host: '172.18.0.4',
                 port: 5432,
                 user: 'adit',
                 password: 'adit',
                 database: 'adit_evs'
               },
             }),
-          }
-            //   {
-            //   events: options?.events || [],
-            //   eventStore: {
-            //     driver: PostgresEventStore,
-            //     host: '//pgdb',
-            //     port: 5432,
-            //     user: 'adit',
-            //     password: 'adit',
-            //     database: 'adit_api',
-            //   },
-            // }
-          ),
+          })
         ],
         providers: [
           {
@@ -83,6 +72,7 @@ export class AditModule {
     const { srvName } = _refs;
     _refs.imports.push(
       PulsarModule.forRootAsync({ srvName, resources }),
+      PostgreModule.forRootAsync({ srvName, resources })
     )
     return _refs;
   }
