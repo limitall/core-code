@@ -1,15 +1,13 @@
 
-import { Db } from '@limitall/core/decorators';
 import { Injectable } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@limitall/core/event';
 import { PatientId } from './domain/value-objects';
 import { GetPatientByIdQuery } from './application/queries';
 import { PatientCreateCommand, PatientStatusChangeCommand, PatientUpdateCommand, PatientDeleteCommand } from './application/commands';
-import { AditService } from '@adit/lib/adit';
+import { AditService, ObjectLiteral, Repository } from '@adit/lib/adit';
 import { CustomEventPublisher } from './application/publichers';
 
 @Injectable()
-@Db()
 export class PatientService extends CustomEventPublisher {
     constructor(
         private readonly commandBus: CommandBus,
@@ -17,12 +15,6 @@ export class PatientService extends CustomEventPublisher {
     ) {
         super();
     }
-
-    @Db('patient')
-    db
-
-    @Db('patient')
-    db2() { }
 
     async create(payLoad: { name: string; email?: string; locId?: string; orgId?: string; }): Promise<string> {
         const command = new PatientCreateCommand(payLoad);
@@ -45,8 +37,6 @@ export class PatientService extends CustomEventPublisher {
         return isDeletd;
     }
     async getPatient(payLoad: { id: string; }) {
-        console.log("YYYYYYYYYYYYYYYYYYYY:::", this.db);
-        console.log("ZZZZZZZZZZZZZZZZz000:::", this.db2());
         const { id } = payLoad;
         const query = new GetPatientByIdQuery({ id });
         const patient = await this.queryBus.execute(query);

@@ -1,1 +1,2 @@
-export * from './pateint-src';
+export * from './appointmnt-srv';
+export * from './pateint-srv';

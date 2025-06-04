@@ -1,8 +1,9 @@
 import { Inject, Injectable, Logger, OnApplicationBootstrap } from '@nestjs/common';
-import { services, featurs, featureActions, topicNames, getMetadataKeys } from '@limitall/core/common';
+import { services, featurs, featureActions, topicNames, getMetadataKeys, GetMetadata } from '@limitall/core/common';
 import { CustomRegistry } from '@limitall/core/decorators';
 import { ModuleRef } from '@nestjs/core';
 import { PostgreService } from '@limitall/core/postgre';
+import { ObjectLiteral, Repository } from 'typeorm';
 
 export type topicType = (typeof AditService.TopicNames)[keyof typeof AditService.TopicNames]
 @Injectable()
@@ -14,37 +15,45 @@ export class AditService implements OnApplicationBootstrap {
         private readonly postgreservice: PostgreService,
     ) { }
 
+    static readonly SrvNames: typeof services = services;
+    static readonly FeaturNames: typeof featurs = featurs;
+    static readonly FeatureActions: typeof featureActions = featureActions;
+    static readonly TopicNames: typeof topicNames = topicNames;
+
     async onApplicationBootstrap() {
         this.logger = new Logger("AditService");
-
         for (const handlerClass of CustomRegistry) {
             try {
                 // Resolve the DI-managed instance of the class
                 const instance = this.moduleRef.get(handlerClass as any, {
                     strict: false,
                 });
-
                 for (const item of getMetadataKeys(instance)) {
                     if (instance[item] && typeof instance[item] === 'function') {
-                        console.log(instance[item], typeof instance[item]);
-                        let result = instance[item]();
-                        return instance[item] = () => {
-                            return "AAAAAAAAAAA...";
+                        let entityName = await instance[item]();
+                        if (entityName) {
+                            instance[item] = async (query: string) => {
+                                return await this.postgreservice.getRepo(`${entityName}`);
+                            }
+                        }
+                    } else {
+                        const val = GetMetadata(instance, item);
+                        if (item.startsWith(`query_`)) {
+                            const repo: Repository<ObjectLiteral> & { raw: any }
+                                = await this.postgreservice.getRepo(`${this.options.srvName}_${val ? val : item}`) as Repository<ObjectLiteral> & { raw: any };
+                            const rawQuery = instance[item];
+                            Object.defineProperty(instance, item, {
+                                configurable: true,
+                                enumerable: true,
+                                get() {
+                                    return (async () => await repo.raw(rawQuery))();
+                                }
+                            })
+                        } else {
+                            instance[item] = await this.postgreservice.getRepo(`${this.options.srvName}_${val ? val : item}`);
                         }
                     }
-                    instance[item] = this.postgreservice
 
-                }
-
-                if (instance && typeof instance.handle === 'function') {
-                    let a = await instance.handle(); // Or register it, bind it, etc.
-                    console.log("AAAAAAAAAAAAAAAA:", a.tmp);
-                    a.tmp = "Hello......"
-                    a.whatmp()
-                } else {
-                    this.logger.warn(
-                        `Class ${handlerClass.name} does not have a handle() method`
-                    );
                 }
             } catch (err) {
                 this.logger.error(
@@ -57,9 +66,5 @@ export class AditService implements OnApplicationBootstrap {
 
     }
 
-    static readonly SrvNames: typeof services = services;
-    static readonly FeaturNames: typeof featurs = featurs;
-    static readonly FeatureActions: typeof featureActions = featureActions;
-    static readonly TopicNames: typeof topicNames = topicNames;
 
 }

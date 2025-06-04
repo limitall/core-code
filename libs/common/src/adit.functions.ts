@@ -1,7 +1,5 @@
-import * as path from 'path';
-import * as fs from 'fs';
-import { readdirSync, statSync } from 'fs';
-import { join } from 'path';
+
+import * as fg from 'fast-glob';
 
 export const SetMetadata = (metadataKey: string, metadataValue: any, target: Object, propertyKey?: string | symbol) => {
     Reflect.defineMetadata(metadataKey!, metadataValue!, target!, propertyKey!);

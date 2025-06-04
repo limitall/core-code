@@ -5,7 +5,7 @@ import { forRootAsyncOptionsType } from "./postgre.module.for-root-async-options
 import { PostgreService } from './postgre.service';
 import { POSTGRE_CLIENT } from './postgre.constants';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Patient } from '@limitall/core/common';
+import { allEntities } from '@limitall/core/common';
 import { join } from 'path';
 
 let _refs;
@@ -24,8 +24,6 @@ export class PostgreModule {
   }
   static async forRootAsync(options: forRootAsyncOptionsType): Promise<DynamicModule> {
     const { srvName, resources } = options;
-    console.log("R:::::::::::", resources);
-
     if (!srvName) {
       throw new RpcException(`SRV name can not be undefind`);
     }
@@ -46,14 +44,12 @@ export class PostgreModule {
               database: 'adit_api',
               logger: 'formatted-console',
               logging: "all",
-              autoLoadEntities: false,
+              autoLoadEntities: true,
               synchronize: false,
             }),
             inject: [ConfigService],
           }),
-          TypeOrmModule.forFeature([
-            Patient
-          ])
+          TypeOrmModule.forFeature(allEntities)
         ],
         providers: [
           {

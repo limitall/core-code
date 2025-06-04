@@ -2,10 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { EventStore, EventStream } from '@limitall/core/event';
 import { Patient, PatientSnapshotRepository } from '../../domain/models';
 import { PatientId } from 'src/patient/domain/value-objects';
-import { AditService } from '@adit/lib/adit';
-import { Adit } from '@limitall/core/decorators';
+import { AditService, ObjectLiteral, Repository } from '@adit/lib/adit';
+import { Adit, DB } from '@limitall/core/decorators';
+import { querys } from './raw.query';
 
 @Adit({ srvName: AditService.SrvNames.PATIENT_SRV, type: 'RegisterRepository' })
+@DB()
 @Injectable()
 export class PatientRepository {
     constructor(
@@ -13,12 +15,32 @@ export class PatientRepository {
         private readonly patientSnapshotRepository: PatientSnapshotRepository,
     ) { }
 
+
+    @DB(AditService.FeaturNames.PATIENT_SRV__PATIENT)
+    db: Repository<ObjectLiteral>
+
+    @DB(AditService.FeaturNames.PATIENT_SRV__PATIENT)
+    query_all: typeof querys[keyof typeof querys] = querys.all;
+
+    @DB()
+    async db2() {
+        return 'APPOINTMENT_SRV_Appointment_Slot';
+    }
+
     async save(patient: Patient): Promise<void> {
         const events = patient.commit();
         const stream = EventStream.for<Patient>(Patient, patient.id);
 
         await this.eventStore.appendEvents(stream, patient.version, events);
         await this.patientSnapshotRepository.save(patient.id, patient);
+
+        // TODO : This need to merge evs and typeorm
+        // let p = this.db.create(patient);
+        // console.log("P::::::::::::", p);
+        // this.db.save(p);
+
+        // console.log("WWWWWWWWWWWWWWW::::", await this.query_all);
+        // console.log("ZZZZZZZZZZZZZZZZz000:::", await this.db2());
     }
 
     async getById(patientId: PatientId): Promise<Patient | undefined> {
