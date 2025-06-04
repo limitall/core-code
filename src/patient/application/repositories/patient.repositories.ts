@@ -4,10 +4,10 @@ import { Patient, PatientSnapshotRepository } from '../../domain/models';
 import { PatientId } from 'src/patient/domain/value-objects';
 import { AditService, ObjectLiteral, Repository } from '@adit/lib/adit';
 import { Adit, DB } from '@limitall/core/decorators';
-import { querys } from './raw.query';
+import { queries } from './raw.query';
 
 @Adit({ srvName: AditService.SrvNames.PATIENT_SRV, type: 'RegisterRepository' })
-@DB()
+@DB({ queries })
 @Injectable()
 export class PatientRepository {
     constructor(
@@ -16,11 +16,11 @@ export class PatientRepository {
     ) { }
 
 
-    @DB(AditService.FeaturNames.PATIENT_SRV__PATIENT)
+    @DB({ tblname: AditService.FeaturNames.PATIENT_SRV_PATIENT })
     db: Repository<ObjectLiteral>
 
-    @DB(AditService.FeaturNames.PATIENT_SRV__PATIENT)
-    query_all: typeof querys[keyof typeof querys] = querys.all;
+    @DB({ tblname: AditService.FeaturNames.PATIENT_SRV_PATIENT })
+    query_all: typeof queries[keyof typeof queries] = queries.all;
 
     @DB()
     async db2() {

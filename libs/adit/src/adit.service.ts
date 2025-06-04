@@ -41,7 +41,21 @@ export class AditService implements OnApplicationBootstrap {
                         if (item.startsWith(`query_`)) {
                             const repo: Repository<ObjectLiteral> & { raw: any }
                                 = await this.postgreservice.getRepo(`${this.options.srvName}_${val ? val : item}`) as Repository<ObjectLiteral> & { raw: any };
+                            const queryMetadata = GetMetadata(handlerClass, 'queries');
                             const rawQuery = instance[item];
+
+                            if (queryMetadata && rawQuery) {
+                                let isKnownQuery = false;
+                                try {
+                                    const querymap = Object.values(queryMetadata);
+                                    isKnownQuery = querymap.some(q => q === rawQuery);
+                                } catch (error) {
+                                }
+                                if (!isKnownQuery) {
+                                    throw new Error("Uknown qury, it must be exist in query constants");
+                                }
+                            }
+
                             Object.defineProperty(instance, item, {
                                 configurable: true,
                                 enumerable: true,
