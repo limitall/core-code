@@ -6,12 +6,19 @@ import { DataSource, ObjectLiteral, Repository } from 'typeorm';
 export class PostgreService {
     constructor(
         @Inject('CONFIG_OPTIONS') private options: Record<string, any>,
-        @InjectDataSource() private readonly dataSource: DataSource
+        @InjectDataSource('C') private readonly commandDataSource: DataSource,
+        @InjectDataSource('Q') private readonly queryDataSource: DataSource
     ) { }
+
+    protected WRITE_METHODS = ['save', 'insert', 'update', 'remove', 'softRemove', 'recover'];
+
 
     protected createSafeRepository<T extends ObjectLiteral>(repo: Repository<T>): Repository<T> & { raw: string } {
         return new Proxy(repo, {
             get(target, prop: keyof Repository<T>) {
+                if (repo.manager.connection.name === 'Q' && this.WRITE_METHODS?.includes(prop as string)) {
+                    throw new Error(`❌ Cannot use "${String(prop)}" on a read-only repository`);
+                }
                 if (prop === 'query') {
                     return () => {
                         throw new Error('⚠️  Use of `.query()` is blocked. Use the CQRS QueryHandler.');
@@ -29,13 +36,16 @@ export class PostgreService {
 
 
     async getRepo(entityName: string): Promise<Repository<ObjectLiteral>> {
+        const isCommand = entityName?.endsWith('$');
+        entityName = entityName.replace(/\$+$/, '');
+        const ds: DataSource = isCommand ? this.commandDataSource : this.queryDataSource;
         const isValidfeatureName = this.options?.resources?.feature?.featureNames.some((item) => entityName.endsWith(`_${item}`));
         if (!isValidfeatureName) {
             throw new Error(
                 `Entity "${entityName}" is not registered in featureNames.`,
             );
         }
-        const isRegistered = this.dataSource.entityMetadatas.some(
+        const isRegistered = ds.entityMetadatas.some(
             (meta) => meta.target === entityName || meta.name === entityName,
         );
 
@@ -45,6 +55,6 @@ export class PostgreService {
             );
         }
 
-        return this.createSafeRepository(this.dataSource.getRepository(entityName));
+        return this.createSafeRepository(ds.getRepository(entityName));
     }
 }

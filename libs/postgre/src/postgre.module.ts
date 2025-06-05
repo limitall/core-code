@@ -3,10 +3,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RpcException } from '@nestjs/microservices';
 import { forRootAsyncOptionsType } from "./postgre.module.for-root-async-options.type";
 import { PostgreService } from './postgre.service';
-import { POSTGRE_CLIENT } from './postgre.constants';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { allEntities } from '@limitall/core/common';
-import { join } from 'path';
 
 let _refs;
 
@@ -35,6 +33,7 @@ export class PostgreModule {
           ConfigModule,
           TypeOrmModule.forRootAsync({
             imports: [ConfigModule],
+            name: 'C',
             useFactory: (configService: ConfigService) => ({
               type: 'postgres',
               host: configService.get('HOST') || '172.18.0.4',
@@ -49,7 +48,26 @@ export class PostgreModule {
             }),
             inject: [ConfigService],
           }),
-          TypeOrmModule.forFeature(allEntities)
+          TypeOrmModule.forRootAsync({
+            imports: [ConfigModule],
+            name: 'Q',
+            useFactory: (configService: ConfigService) => ({
+              type: 'postgres',
+              host: configService.get('HOST') || '172.18.0.4',
+              port: 5432,
+              username: 'adit',
+              password: 'adit',
+              database: 'adit_api',
+              logger: 'formatted-console',
+              logging: "all",
+              autoLoadEntities: true,
+              synchronize: false,
+            }),
+            inject: [ConfigService],
+          }),
+          // TODO : have to replace this hardcoded string C and Q with constat variable
+          TypeOrmModule.forFeature(allEntities, 'C'),
+          TypeOrmModule.forFeature(allEntities, 'Q'),
         ],
         providers: [
           {

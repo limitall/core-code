@@ -16,7 +16,7 @@ export class PatientRepository {
     ) { }
 
 
-    @DB({ tblname: AditService.FeaturNames.PATIENT_SRV_PATIENT })
+    @DB({ tblname: AditService.FeaturNames.PATIENT_SRV_PATIENT, asCommand: true })
     db: Repository<ObjectLiteral>
 
     @DB({ tblname: AditService.FeaturNames.PATIENT_SRV_PATIENT })

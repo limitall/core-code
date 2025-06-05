@@ -38,6 +38,7 @@ export class AditService implements OnApplicationBootstrap {
                         }
                     } else {
                         const val = GetMetadata(instance, item);
+
                         if (item.startsWith(`query_`)) {
                             const repo: Repository<ObjectLiteral> & { raw: any }
                                 = await this.postgreservice.getRepo(`${this.options.srvName}_${val ? val : item}`) as Repository<ObjectLiteral> & { raw: any };

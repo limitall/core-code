@@ -4,14 +4,13 @@ import { isObject } from "class-validator";
 //TODO : need to move this in commonregistyr like method registry.
 export const CustomRegistry = new Set<any>();
 
-export function DB(options?: { tblname?: string; queries?: object }): any {
+export function DB(options?: { tblname?: string; queries?: object, asCommand?: boolean }): any {
     return (target: any, _key: string | symbol) => {
         if (isObject(target) && !_key && !options?.tblname) {
-            console.log("OPPPPPPP:", options);
             SetMetadata('queries', options?.queries, target)
             CustomRegistry.add(target);
         } else {
-            SetMetadata(_key.toString(), options?.tblname, target)
+            SetMetadata(_key.toString(), `${options?.tblname?.replace(/\$+$/, '')}${options?.asCommand ? '$' : ''}`, target)
         }
     };
 }
