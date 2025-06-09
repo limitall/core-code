@@ -6,7 +6,11 @@
     "deleteOutDir": true,
     "webpack": true,
     "assets": [
-      "**/*.proto"
+      "**/*.proto",
+      {
+        "include": "**/*.proto",
+        "outDir": "./dist"
+      }
     ],
     "watchAssets": true
   },

@@ -4,7 +4,6 @@ import { CommandBus, QueryBus } from '@limitall/core/event';
 import { PatientId } from './domain/value-objects';
 import { GetPatientByIdQuery } from './application/queries';
 import { PatientCreateCommand, PatientStatusChangeCommand, PatientUpdateCommand, PatientDeleteCommand } from './application/commands';
-import { AditService, ObjectLiteral, Repository } from '@adit/lib/adit';
 import { CustomEventPublisher } from './application/publichers';
 
 @Injectable()

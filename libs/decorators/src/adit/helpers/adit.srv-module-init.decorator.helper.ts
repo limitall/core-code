@@ -1,12 +1,16 @@
 import { AditModule } from '@adit/lib/adit';
-import { SrvModuleInitHelperType } from './adit.srv-module-init.decorator.helper.type';
-import { GetMetadata } from '@limitall/core/common';
-import { IEvent } from '@ocoda/event-sourcing';
+import { GetMetadata, SetMetadata } from '@limitall/core/common';
+import { IEvent } from '@limitall/core/event';
 import { Type } from '@nestjs/common';
+import { SrvModuleInitHelperType } from './adit.srv-module-init.decorator.helper.type';
 
 
 export const SrvModuleInitHelper = ({ srvName, target, store, resources }: SrvModuleInitHelperType): void => {
-    const imp: any[] = GetMetadata(target, 'imports');
+    let imp: any[] = GetMetadata(target, 'imports');
+    if (!imp) {
+        SetMetadata('imports', [], target);
+        imp = GetMetadata(target, 'imports');
+    }
     const events: Type<IEvent>[] = store["Events"];
     if (events) {
         imp.push(

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { EventStore, EventStream } from '@limitall/core/event';
 import { Patient, PatientSnapshotRepository } from '../../domain/models';
-import { PatientId } from 'src/patient/domain/value-objects';
+import { PatientId } from 'src/patient_srv/domain/value-objects';
 import { AditService, ObjectLiteral, Repository } from '@adit/lib/adit';
 import { Adit, CH, DB } from '@limitall/core/decorators';
 import { db_queries } from './db-raw.query';

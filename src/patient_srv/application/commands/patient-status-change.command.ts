@@ -3,25 +3,25 @@ import { PatientRepository } from '../repositories';
 import { PatientId, PatientStatus } from '../../domain/value-objects';
 import { AditService } from '@adit/lib/adit';
 import { Adit } from '@limitall/core/decorators';
-import { PatientNotFoundException } from 'src/patient/domain/exceptions';
-import { RpcException } from '@nestjs/microservices';
+import { PatientNotFoundException } from 'src/patient_srv/domain/exceptions';
 
-export class PatientDeleteCommand implements ICommand {
-    constructor(public readonly payLoad: { id: string; }) { }
+export class PatientStatusChangeCommand implements ICommand {
+    constructor(public readonly payLoad: { id: string; status: boolean; }) { }
 }
 
 @Adit({ srvName: AditService.SrvNames.PATIENT_SRV, type: 'RegisterCommandHandler' })
-@CommandHandler(PatientDeleteCommand)
-export class PatientDeleteCommandHandler implements ICommandHandler {
+@CommandHandler(PatientStatusChangeCommand)
+export class PatientStatusChangeCommandHandler implements ICommandHandler {
     constructor(private readonly patientRepository: PatientRepository) { }
 
-    async execute(command: PatientDeleteCommand): Promise<boolean> {
+    async execute(command: PatientStatusChangeCommand): Promise<boolean> {
+
         const patientId = PatientId.from(command.payLoad.id);
         const patient = await this.patientRepository.getById(patientId);
         if (!patient) {
             throw PatientNotFoundException.withId(patientId);
         }
-        patient.delete();
+        patient.changeStatus(PatientStatus.from(command.payLoad.status));
         await this.patientRepository.save(patient);
         return true;
     }

@@ -16,10 +16,7 @@ export type optionsTypes = {
 
 }
 
-type featureTypes = {
-    featureNames: (typeof AditService.FeaturNames)[keyof typeof AditService.FeaturNames][];
-    featureActions: (typeof AditService.FeatureActions)[keyof typeof AditService.FeatureActions][];
-}
+type featureTypes = (typeof AditService.FeaturNames)[keyof typeof AditService.FeaturNames][];
 
 export type AditDecoratorParamsType = {
     srvName: (typeof AditService.SrvNames)[keyof typeof AditService.SrvNames];

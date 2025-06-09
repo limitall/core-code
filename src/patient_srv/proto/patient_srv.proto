@@ -1,10 +1,10 @@
 
-// patient/patient.proto
+// patient_srv/proto/patient_srv.proto
 syntax = "proto3";
 
 package PATIENT_SRV;
 
-service PatientesService {
+service PatienteService {
   rpc FindOne (PatientById) returns (Patient) {}
   rpc CreateOne (PatientCreate) returns (PatientById) {}
   rpc UpdateOne (PatientUpdate) returns (PatientUpdateStatus) {}

@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger, OnApplicationBootstrap } from '@nestjs/common';
-import { services, featurs, featureActions, topicNames, GetMetadataKeys, GetMetadata } from '@limitall/core/common';
+import { services, featurs, topicNames, GetMetadataKeys, GetMetadata } from '@limitall/core/common';
 import { CHClassRegistry, DBClassRegistry } from '@limitall/core/decorators';
 import { ModuleRef } from '@nestjs/core';
 import { PostgreService } from '@limitall/core/postgre';
@@ -19,7 +19,6 @@ export class AditService implements OnApplicationBootstrap {
 
     static readonly SrvNames: typeof services = services;
     static readonly FeaturNames: typeof featurs = featurs;
-    static readonly FeatureActions: typeof featureActions = featureActions;
     static readonly TopicNames: typeof topicNames = topicNames;
 
     async onApplicationBootstrap() {

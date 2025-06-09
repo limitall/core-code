@@ -39,7 +39,7 @@ export class PostgreService {
         const isCommand = entityName?.endsWith('$');
         entityName = entityName.replace(/\$+$/, '');
         const ds: DataSource = isCommand ? this.commandDataSource : this.queryDataSource;
-        const isValidfeatureName = this.options?.resources?.feature?.featureNames.some((item) => entityName.endsWith(`_${item}`));
+        const isValidfeatureName = this.options?.resources?.feature?.some((item) => entityName.endsWith(`_${item}`));
         if (!isValidfeatureName) {
             throw new Error(
                 `Entity "${entityName}" is not registered in featureNames.`,

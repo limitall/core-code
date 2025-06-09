@@ -29,7 +29,7 @@ export const GrpcServer = (params: serverOptions): PropertyDecorator => {
         const host: string = process.env[`${srvName}_HOST`] || '0.0.0.0';
         const port: string = process.env[`${srvName}_PORT`] || '40000';
         const protoBasePath: string = process.env[`${srvName}_PROTO_BASE`] || './';
-        const protoPath: string = join(protoBasePath, `${srvName}.proto`);
+        const protoPath: string = join(protoBasePath.toLocaleLowerCase(), `${srvName.toLocaleLowerCase()}`, `proto`, `${srvName.toLocaleLowerCase()}.proto`);
         const app = NestFactory.createMicroservice<MicroserviceOptions>(srvModule, {
             transport: Transport.GRPC,
             options: {

@@ -7,7 +7,6 @@ import { resources } from './patient.resources';
 
 @Adit({ srvName: AditService.SrvNames.PATIENT_SRV, type: 'SrvModuleInit', resources })
 @Module({
-  imports: [],
   controllers: [PatientController],
   providers: [PatientService]
 })
