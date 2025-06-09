@@ -3,11 +3,13 @@ import { EventStore, EventStream } from '@limitall/core/event';
 import { Patient, PatientSnapshotRepository } from '../../domain/models';
 import { PatientId } from 'src/patient/domain/value-objects';
 import { AditService, ObjectLiteral, Repository } from '@adit/lib/adit';
-import { Adit, DB } from '@limitall/core/decorators';
-import { queries } from './raw.query';
+import { Adit, CH, DB } from '@limitall/core/decorators';
+import { db_queries } from './db-raw.query';
+import { analytics_queries } from './analytics-raw.query';
 
 @Adit({ srvName: AditService.SrvNames.PATIENT_SRV, type: 'RegisterRepository' })
-@DB({ queries })
+@DB({ queries: db_queries })
+@CH(analytics_queries)
 @Injectable()
 export class PatientRepository {
     constructor(
@@ -19,12 +21,19 @@ export class PatientRepository {
     @DB({ tblname: AditService.FeaturNames.PATIENT_SRV_PATIENT, asCommand: true })
     db: Repository<ObjectLiteral>
 
-    @DB({ tblname: AditService.FeaturNames.PATIENT_SRV_PATIENT })
-    query_all: typeof queries[keyof typeof queries] = queries.all;
-
     @DB()
     async db2() {
         return 'APPOINTMENT_SRV_Appointment_Slot';
+    }
+
+    @DB({ tblname: AditService.FeaturNames.PATIENT_SRV_PATIENT })
+    async query_all(): Promise<typeof db_queries[keyof typeof db_queries]> {
+        return db_queries.all
+    };
+
+    @CH()
+    async query_click(): Promise<typeof analytics_queries[keyof typeof analytics_queries]> {
+        return analytics_queries.all;
     }
 
     async save(patient: Patient): Promise<void> {
@@ -39,11 +48,14 @@ export class PatientRepository {
         // console.log("P::::::::::::", p);
         // this.db.save(p);
 
-        // console.log("WWWWWWWWWWWWWWW::::", await this.query_all);
-        // console.log("ZZZZZZZZZZZZZZZZz000:::", await this.db2());
+        // console.log("QQQ::::::::", await this.query_click());
+        // console.log("QQQ::::::::", await this.query_all());
+        // console.log("QQQ::::::::", this.db.create);
+        // console.log("QQQ::::::::", await this.db2());
     }
 
     async getById(patientId: PatientId): Promise<Patient | undefined> {
+
         const eventStream = EventStream.for<Patient>(Patient, patientId);
         const patient = await this.patientSnapshotRepository.load(patientId);
         const eventCursor = this.eventStore.getEvents(eventStream, {

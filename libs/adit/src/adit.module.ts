@@ -3,6 +3,7 @@ import { RpcException } from '@nestjs/microservices';
 import { EventSourcingModule, PostgresEventStore, PostgresSnapshotStore } from '@limitall/core/event';
 import { PulsarModule } from '@limitall/core/pulsar';
 import { PostgreModule } from '@limitall/core/postgre';
+import { ClickHouseModule } from '@limitall/core/clickhouse';
 import { AditService } from './adit.service';
 import { forRootAsyncOptionsType } from './adit.module.for-root-async-options.type';
 
@@ -72,7 +73,8 @@ export class AditModule {
     const { srvName } = _refs;
     _refs.imports.push(
       PulsarModule.forRootAsync({ srvName, resources }),
-      PostgreModule.forRootAsync({ srvName, resources })
+      PostgreModule.forRootAsync({ srvName, resources }),
+      ClickHouseModule.forRootAsync({ srvName, resources })
     )
     return _refs;
   }

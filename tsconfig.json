@@ -24,6 +24,12 @@
       "@adit/lib/adit/*": [
         "libs/adit/src/*"
       ],
+      "@limitall/core/clickhouse": [
+        "libs/clickhouse/src"
+      ],
+      "@limitall/core/clickhouse/*": [
+        "libs/clickhouse/src/*"
+      ],
       "@limitall/core/common": [
         "libs/common/src"
       ],

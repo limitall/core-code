@@ -13,6 +13,8 @@
   "moduleNameMapper": {
     "@adit/lib/adit": "<rootDir>/../libs/adit/src",
     "@adit/lib/adit/(.*)": "<rootDir>/../libs/adit/src/$1",
+    "@limitall/core/clickhouse": "<rootDir>/../libs/clickhouse/src",
+    "@limitall/core/clickhouse/(.*)": "<rootDir>/../libs/clickhouse/src/$1",
     "@limitall/core/db": "<rootDir>/../libs/db/src",
     "@limitall/core/db/(.*)": "<rootDir>/../libs/db/src/$1",
     "@limitall/core/decorators": "<rootDir>/../libs/decorators/src",

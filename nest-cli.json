@@ -20,6 +20,15 @@
         "tsConfigPath": "libs/adit/tsconfig.lib.json"
       }
     },
+    "clickhouse": {
+      "type": "library",
+      "root": "libs/clickhouse",
+      "entryFile": "index",
+      "sourceRoot": "libs/clickhouse/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/clickhouse/tsconfig.lib.json"
+      }
+    },
     "common": {
       "type": "library",
       "root": "libs/common",
