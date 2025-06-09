@@ -15,10 +15,12 @@ export class PatientCreateCommandHandler implements ICommandHandler {
     constructor(private readonly patientRepository: PatientRepository) { }
 
     async execute(command: PatientCreateCommand): Promise<PatientId> {
+        // TODO : we can apply duplicate check logic in main db and eventdb, if it is unique then and then we will apply event
         const patientId = PatientId.generate();
         const email = command.payLoad.email ? Email.from(command.payLoad.email) : undefined;
         const patient = Patient.create(
-            patientId, PatientName.from(command.payLoad.name),
+            patientId,
+            PatientName.from(command.payLoad.name),
             email,
             PatientStatus.from(true),
             new Date(),

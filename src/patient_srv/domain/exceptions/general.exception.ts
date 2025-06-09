@@ -1,7 +1,7 @@
-import { DomainException } from '@limitall/core/event';
+import { RpcException } from '@nestjs/microservices';
 
-export class GeneralException extends DomainException {
-    static because(cause: string): DomainException {
+export class GeneralException extends RpcException {
+    static because(cause: string): RpcException {
         return new GeneralException(cause);
     }
 }

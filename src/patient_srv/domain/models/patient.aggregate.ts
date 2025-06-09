@@ -1,4 +1,4 @@
-import { Aggregate, AggregateRoot, EventHandler, UUID } from '@limitall/core/event';
+import { Aggregate, AggregateRoot, EventHandler } from '@limitall/core/event';
 import {
     PatientCreatedEvent,
     PatientUpdatedEvent,
