@@ -20,7 +20,7 @@ export class GetPatientByIdQueryHandler implements IQueryHandler<GetPatientByIdQ
 
         const patient = await this.patientRepository.getById(patientId);
 
-        if (!patient || patient.isDeleted) {
+        if (!patient || patient.props.isDeleted) {
             throw PatientNotFoundException.withId(patientId);
         }
         return PatientDto.from(patient);

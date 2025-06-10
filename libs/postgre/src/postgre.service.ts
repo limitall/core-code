@@ -10,13 +10,11 @@ export class PostgreService {
         @InjectDataSource('Q') private readonly queryDataSource: DataSource
     ) { }
 
-    protected WRITE_METHODS = ['save', 'insert', 'update', 'remove', 'softRemove', 'recover'];
-
-
     protected createSafeRepository<T extends ObjectLiteral>(repo: Repository<T>): Repository<T> & { raw: string } {
         return new Proxy(repo, {
             get(target, prop: keyof Repository<T>) {
-                if (repo.manager.connection.name === 'Q' && this.WRITE_METHODS?.includes(prop as string)) {
+                const WRITE_METHODS = ['save', 'insert', 'update', 'remove', 'softRemove', 'recover', 'create'];
+                if (repo.manager.connection.name === 'Q' && WRITE_METHODS?.includes(prop as string)) {
                     throw new Error(`❌ Cannot use "${String(prop)}" on a read-only repository`);
                 }
                 if (prop === 'query') {

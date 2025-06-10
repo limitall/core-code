@@ -8,41 +8,45 @@ import { AditService } from '@adit/lib/adit';
 @Adit({ srvName: AditService.SrvNames.PATIENT_SRV, type: 'RegisterEventSerializer' })
 @EventSerializer(PatientCreatedEvent)
 export class PatientCreatedEventSerializer implements IEventSerializer {
-    serialize({
-        patientId,
-        patientName,
-        patientEmail,
-        patientStatus,
-        createdAt,
-        updatedAt,
-        locId,
-        orgId,
-        isDeleted,
-    }: PatientCreatedEvent): IEventPayload<PatientCreatedEvent> {
-        return {
+    serialize(patient: PatientCreatedEvent): IEventPayload<PatientCreatedEvent> {
+        const {
             patientId,
             patientName,
             patientEmail,
             patientStatus,
-            createdAt: createdAt?.toISOString(),
-            updatedAt: updatedAt?.toISOString(),
+            createdAt,
+            updatedAt,
             locId,
             orgId,
             isDeleted,
+        } = patient.props;
+        return {
+            props: {
+                patientId,
+                patientName,
+                patientEmail,
+                patientStatus,
+                createdAt,
+                updatedAt,
+                locId,
+                orgId,
+                isDeleted,
+            }
         };
     }
 
-    deserialize({
-        patientId,
-        patientName,
-        patientEmail,
-        patientStatus,
-        createdAt,
-        updatedAt,
-        locId,
-        orgId,
-        isDeleted,
-    }: IEventPayload<PatientCreatedEvent>): PatientCreatedEvent {
+    deserialize(patient: IEventPayload<PatientCreatedEvent>): PatientCreatedEvent {
+        const {
+            patientId,
+            patientName,
+            patientEmail,
+            patientStatus,
+            createdAt,
+            updatedAt,
+            locId,
+            orgId,
+            isDeleted,
+        } = patient.props;
         const createdAtDate = createdAt && new Date(createdAt);
         const updatedAtDate = updatedAt && new Date(updatedAt);
         if (!createdAtDate) {
@@ -58,7 +62,7 @@ export class PatientCreatedEventSerializer implements IEventSerializer {
             throw new Error('Invalid patient Id');
         }
 
-        return new PatientCreatedEvent(
+        return new PatientCreatedEvent({
             patientId,
             patientName,
             patientEmail,
@@ -68,6 +72,6 @@ export class PatientCreatedEventSerializer implements IEventSerializer {
             locId,
             orgId,
             isDeleted
-        );
+        });
     }
 }

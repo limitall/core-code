@@ -1,9 +1,9 @@
 import { CommandHandler, type ICommand, type ICommandHandler } from '@limitall/core/event';
 import { Patient } from '../../domain/models';
 import { PatientRepository } from '../repositories';
-import { Email, PatientId, PatientName, PatientStatus } from '../../domain/value-objects';
+import { Email, LocationId, OrganizationId, PatientId, PatientName, PatientStatus } from '../../domain/value-objects';
 import { AditService } from '@adit/lib/adit';
-import { Adit, MB } from '@limitall/core/decorators';
+import { Adit } from '@limitall/core/decorators';
 
 export class PatientCreateCommand implements ICommand {
     constructor(public readonly payLoad: { name: string; email?: string; locId?: string; orgId?: string; }) { }
@@ -19,13 +19,18 @@ export class PatientCreateCommandHandler implements ICommandHandler {
         const patientId = PatientId.generate();
         const email = command.payLoad.email ? Email.from(command.payLoad.email) : undefined;
         const patient = Patient.create(
-            patientId,
-            PatientName.from(command.payLoad.name),
-            email,
-            PatientStatus.from(true),
-            new Date(),
-            command.payLoad.locId,
-            command.payLoad.orgId
+            {
+                id: patientId,
+                name: PatientName.from(command.payLoad.name),
+                email,
+                status: PatientStatus.from(true),
+                createdAt: new Date(),
+                updatedAt: new Date(),
+                locId: command.payLoad.locId ? LocationId.from(command.payLoad.locId) : LocationId.generate(),
+                orgId: command.payLoad.orgId ? OrganizationId.from(command.payLoad.orgId) : OrganizationId.generate(),
+                isDeleted: false,
+            }
+
         );
         await this.patientRepository.save(patient);
 

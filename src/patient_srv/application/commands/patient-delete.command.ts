@@ -1,10 +1,9 @@
 import { CommandHandler, type ICommand, type ICommandHandler } from '@limitall/core/event';
 import { PatientRepository } from '../repositories';
-import { PatientId, PatientStatus } from '../../domain/value-objects';
+import { PatientId } from '../../domain/value-objects';
 import { AditService } from '@adit/lib/adit';
 import { Adit } from '@limitall/core/decorators';
 import { PatientNotFoundException } from 'src/patient_srv/domain/exceptions';
-import { RpcException } from '@nestjs/microservices';
 
 export class PatientDeleteCommand implements ICommand {
     constructor(public readonly payLoad: { id: string; }) { }

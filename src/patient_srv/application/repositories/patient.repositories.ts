@@ -38,14 +38,15 @@ export class PatientRepository {
 
     async save(patient: Patient): Promise<void> {
         const events = patient.commit();
-        const stream = EventStream.for<Patient>(Patient, patient.id);
+        const stream = EventStream.for<Patient>(Patient, patient.props.id);
+        console.log("Ev::::", stream);
 
         await this.eventStore.appendEvents(stream, patient.version, events);
-        await this.patientSnapshotRepository.save(patient.id, patient);
+        await this.patientSnapshotRepository.save(patient.props.id, patient);
 
         // TODO : This need to merge evs and typeorm
-        // let p = this.db.create(patient);
-        // console.log("P::::::::::::", p);
+        let p = this.db.create(patient);
+        console.log("P::::::::::::", this.patientSnapshotRepository.deserialize(this.patientSnapshotRepository.serialize(patient)));
         // this.db.save(p);
 
         // console.log("QQQ::::::::", await this.query_click());
@@ -73,7 +74,7 @@ export class PatientRepository {
         const patients = await this.patientSnapshotRepository.loadMany(patientIds, 'e2e');
 
         for (const patient of patients) {
-            const eventStream = EventStream.for<Patient>(Patient, patient.id);
+            const eventStream = EventStream.for<Patient>(Patient, patient.props.id);
             const eventCursor = this.eventStore.getEvents(eventStream, { pool: 'e2e', fromVersion: patient.version + 1 });
             await patient.loadFromHistory(eventCursor);
         }

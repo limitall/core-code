@@ -12,12 +12,12 @@ export class PatientDto {
 
     static from(patient: Patient): PatientDto {
         return new PatientDto(
-            patient.id?.value,
-            patient.name?.value,
-            patient.email?.value,
-            patient.status?.value,
-            patient.locId,
-            patient.orgId,
+            patient.props.id,
+            patient.props.name,
+            patient.props.email,
+            patient.props.status,
+            patient.props.locId,
+            patient.props.orgId,
         );
     }
 }

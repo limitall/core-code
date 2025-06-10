@@ -5,42 +5,43 @@ import {
     PatientStatusChangedEvent,
     PatientDeletedEvent,
 } from '../events';
-import { PatientUpdateException } from '../exceptions';
-import { Email, PatientId, PatientName, PatientStatus } from '../value-objects';
+import { PatientUpdateException, PatientCreateException } from '../exceptions';
+import { Email, LocationId, OrganizationId, PatientId, PatientName, PatientStatus } from '../value-objects';
+import { PatientProps } from './patient.props';
 
 @Aggregate({ streamName: 'patient' })
 export class Patient extends AggregateRoot {
-    public id: PatientId;
-    public name: PatientName;
-    public email: Email;
-    public status: PatientStatus;
-    public createdAt: Date;
-    public updatedAt: Date;
-    public locId: string;
-    public orgId: string;
-    public isDeleted: boolean;
 
-    public static create(
-        patientId: PatientId,
-        patientName: PatientName,
-        patientEmail?: Email,
-        patientStatus?: PatientStatus,
-        createdAt: Date = new Date(),
-        locId?: string,
-        orgId?: string,
-    ) {
-        const patient = new Patient();
+    public props;
+
+    constructor(props: PatientProps) {
+        super();
+        this.props = props;
+    }
+
+    public static create(props: PatientProps
+    ): Patient {
+        if (props.isDeleted) {
+            throw PatientCreateException.because('Cannot create a patient marked as deleted.');
+        }
+
+        if (props.name.value.trim() === '') {
+            throw PatientCreateException.because('Patient name cannot be empty.');
+        }
+        const patient = new Patient(props);
         patient.applyEvent(
             new PatientCreatedEvent(
-                patientId.value,
-                patientName.value,
-                patientEmail?.value,
-                patientStatus?.value,
-                createdAt,
-                new Date(),
-                locId,
-                orgId,
-                false
+                {
+                    patientId: props.id.value,
+                    patientName: props.name.value,
+                    patientEmail: props.email?.value,
+                    patientStatus: props.status.value,
+                    createdAt: props.createdAt,
+                    updatedAt: props.createdAt,
+                    locId: props.locId?.value,
+                    orgId: props.orgId?.value,
+                    isDeleted: props.isDeleted
+                }
             ),
         );
 
@@ -53,12 +54,13 @@ export class Patient extends AggregateRoot {
         patientStatus?: PatientStatus,
     ) {
         if (
-            this.name === patientName &&
-            this.email === patientEmail &&
-            this.status == patientStatus
+            this.props.name === patientName &&
+            this.props.email === patientEmail &&
+            this.props.status == patientStatus
         ) {
-            throw PatientUpdateException.because(`Patient already updated`, this.id)
+            throw PatientUpdateException.because(`Patient already updated`, this.props.id)
         }
+        console.log("This::::", this);
         this.applyEvent(
             new PatientUpdatedEvent(
                 patientName?.value,
@@ -69,8 +71,8 @@ export class Patient extends AggregateRoot {
     }
 
     public changeStatus(patientStatus: PatientStatus) {
-        if (this.status == patientStatus) {
-            throw PatientUpdateException.because(`Patient already in ${patientStatus ? 'active' : 'inactive'} state`, this.id)
+        if (this.props.status == patientStatus) {
+            throw PatientUpdateException.because(`Patient already in ${patientStatus ? 'active' : 'inactive'} state`, this.props.id)
         }
         this.applyEvent(
             new PatientStatusChangedEvent(patientStatus.value)
@@ -78,8 +80,8 @@ export class Patient extends AggregateRoot {
     }
 
     public delete() {
-        if (this.isDeleted) {
-            throw PatientUpdateException.because(`Patient already deleted`, this.id)
+        if (this.props.isDeleted) {
+            throw PatientUpdateException.because(`Patient already deleted`, this.props.id)
         }
         this.applyEvent(
             new PatientDeletedEvent()
@@ -88,50 +90,50 @@ export class Patient extends AggregateRoot {
 
     @EventHandler(PatientCreatedEvent)
     onPatientCreatedEvent(event: PatientCreatedEvent) {
-        this.id = PatientId.from(event.patientId);
-        this.name = PatientName.from(event.patientName);
-        if (event.patientEmail) {
-            this.email = Email.from(event.patientEmail);
+        this.props.id = PatientId.from(event.props.patientId);
+        this.props.name = PatientName.from(event.props.patientName);
+        if (event.props.patientEmail) {
+            this.props.email = Email.from(event.props.patientEmail);
         }
-        if (event.patientStatus) {
-            this.status = PatientStatus.from(event.patientStatus);
+        if (event.props.patientStatus) {
+            this.props.status = PatientStatus.from(event.props.patientStatus);
         }
-        this.createdAt = event.createdAt || new Date();
-        this.updatedAt = event.updatedAt || new Date();
-        if (event.locId) {
-            this.locId = event.locId;
+        this.props.createdAt = event.props.createdAt || new Date();
+        this.props.updatedAt = event.props.updatedAt || new Date();
+        if (event.props.locId) {
+            this.props.locId = LocationId.from(event.props.locId);
         }
-        if (event.orgId) {
-            this.orgId = event.orgId;
+        if (event.props.orgId) {
+            this.props.orgId = OrganizationId.from(event.props.orgId);
         }
-        this.isDeleted = event.isDeleted || false;
+        this.props.isDeleted = event.props.isDeleted || false;
     }
 
     @EventHandler(PatientUpdatedEvent)
     onPatientUpdatedEvent(event: PatientUpdatedEvent) {
         if (event.patientName) {
-            this.name = PatientName.from(event.patientName);
+            this.props.name = PatientName.from(event.patientName);
         }
         if (event.patientEmail) {
-            this.email = Email.from(event.patientEmail);
+            this.props.email = Email.from(event.patientEmail);
         }
         if (typeof (event.patientStatus) === typeof (true)) {
-            this.status = PatientStatus.from(event.patientStatus || false);
+            this.props.status = PatientStatus.from(event.patientStatus || false);
         }
-        this.updatedAt = new Date();
+        this.props.updatedAt = new Date();
     }
 
     @EventHandler(PatientStatusChangedEvent)
     onPatientStatusChangedEvent(event: PatientStatusChangedEvent) {
         if (typeof (event.patientStatus) === typeof (true)) {
-            this.status = PatientStatus.from(event.patientStatus || false);
-            this.updatedAt = new Date();
+            this.props.status = PatientStatus.from(event.patientStatus || false);
+            this.props.updatedAt = new Date();
         }
     }
 
     @EventHandler(PatientDeletedEvent)
     onPatientDeletedEvent(event: PatientDeletedEvent) {
-        this.isDeleted = true;
-        this.updatedAt = new Date();
+        this.props.isDeleted = true;
+        this.props.updatedAt = new Date();
     }
 }
