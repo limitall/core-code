@@ -5,4 +5,5 @@ export type SrvModuleInitHelperType = {
     target: any;
     store: object;
     resources: any;
+    options?: any;
 };

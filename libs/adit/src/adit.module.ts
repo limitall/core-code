@@ -66,14 +66,17 @@ export class AditModule {
     }
     return _refs;
   }
-  static async forFeature({ resources }): Promise<DynamicModule> {
+  static async forFeature(opt): Promise<DynamicModule> {
     if (!_refs) {
       throw new RpcException(`SRV name can not be undefind`);
     }
     const { srvName } = _refs;
+    const { resources, typeormOptions } = opt;
+
+    console.log("opt::::::::::::", opt);
     _refs.imports.push(
       PulsarModule.forRootAsync({ srvName, resources }),
-      PostgreModule.forRootAsync({ srvName, resources }),
+      PostgreModule.forRootAsync({ srvName, resources, typeormOptions }),
       ClickHouseModule.forRootAsync({ srvName, resources })
     )
     return _refs;

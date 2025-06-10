@@ -35,7 +35,7 @@ export function Adit(params: AditDecoratorParamsType): ClassDecorator {
             //     CreateServerHelper({ srvName, target, store: ModuleStore[srvName] });
             //     break;
             case 'SrvModuleInit':
-                SrvModuleInitHelper({ srvName, target, store: ModuleStore[srvName], resources });
+                SrvModuleInitHelper({ srvName, target, store: ModuleStore[srvName], resources, options });
                 break;
             case 'RegisterEvent':
                 registerEventHelper({ store: ModuleStore[srvName], target });

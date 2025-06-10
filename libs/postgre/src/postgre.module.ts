@@ -21,7 +21,7 @@ export class PostgreModule {
   constructor() {
   }
   static async forRootAsync(options: forRootAsyncOptionsType): Promise<DynamicModule> {
-    const { srvName, resources } = options;
+    const { srvName, resources, typeormOptions } = options;
     if (!srvName) {
       throw new RpcException(`SRV name can not be undefind`);
     }
@@ -45,6 +45,7 @@ export class PostgreModule {
               logging: "all",
               autoLoadEntities: true,
               synchronize: false,
+              ...typeormOptions
             }),
             inject: [ConfigService],
           }),

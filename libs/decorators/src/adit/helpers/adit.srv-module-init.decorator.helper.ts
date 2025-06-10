@@ -5,7 +5,7 @@ import { Type } from '@nestjs/common';
 import { SrvModuleInitHelperType } from './adit.srv-module-init.decorator.helper.type';
 
 
-export const SrvModuleInitHelper = ({ srvName, target, store, resources }: SrvModuleInitHelperType): void => {
+export const SrvModuleInitHelper = ({ srvName, target, store, resources, options }: SrvModuleInitHelperType): void => {
     let imp: any[] = GetMetadata(target, 'imports');
     if (!imp) {
         SetMetadata('imports', [], target);
@@ -14,8 +14,8 @@ export const SrvModuleInitHelper = ({ srvName, target, store, resources }: SrvMo
     const events: Type<IEvent>[] = store["Events"];
     if (events) {
         imp.push(
-            AditModule.forRootAsync({ options: { srvName, events } }),
-            AditModule.forFeature({ resources }),
+            AditModule.forRootAsync({ options: { srvName, events, ...options } }),
+            AditModule.forFeature({ resources, ...options }),
         );
     }
     const pro: any[] = GetMetadata(target, 'providers');

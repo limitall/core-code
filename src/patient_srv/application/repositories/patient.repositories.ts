@@ -6,6 +6,7 @@ import { AditService, ObjectLiteral, Repository } from '@adit/lib/adit';
 import { Adit, CH, DB } from '@limitall/core/decorators';
 import { db_queries } from './db-raw.query';
 import { analytics_queries } from './analytics-raw.query';
+import { PatientCreateException } from 'src/patient_srv/domain/exceptions';
 
 @Adit({ srvName: AditService.SrvNames.PATIENT_SRV, type: 'RegisterRepository' })
 @DB({ queries: db_queries })
@@ -21,8 +22,11 @@ export class PatientRepository {
     @DB({ tblname: AditService.FeaturNames.PATIENT_SRV_PATIENT, asCommand: true })
     db: Repository<ObjectLiteral>
 
+    @DB({ tblname: AditService.FeaturNames.PATIENT_SRV_PATIENT })
+    db2: Repository<ObjectLiteral>
+
     @DB()
-    async db2() {
+    async db3() {
         return 'APPOINTMENT_SRV_Appointment_Slot';
     }
 
@@ -37,36 +41,30 @@ export class PatientRepository {
     }
 
     async save(patient: Patient): Promise<void> {
-        const events = patient.commit();
-        const stream = EventStream.for<Patient>(Patient, patient.id);
-
-        await this.eventStore.appendEvents(stream, patient.version, events);
-        await this.patientSnapshotRepository.save(patient.id, patient);
-
-        // TODO : This need to merge evs and typeorm
-        // let p = this.db.create(patient);
-        // console.log("P::::::::::::", p);
-        // this.db.save(p);
-
+        try {
+            const newPatient = this.db.create(this.patientSnapshotRepository.serialize(patient));
+            const result = await this.db.save(newPatient);
+            if (result === newPatient) {
+                const events = patient.commit();
+                const stream = EventStream.for<Patient>(Patient, patient.id);
+                await this.eventStore.appendEvents(stream, patient.version, events);
+                await this.patientSnapshotRepository.save(patient.id, patient);
+            }
+        } catch (error) {
+            console.log(error.code);
+            if (error.code === '23505') {
+                throw PatientCreateException.because(`Patient with email : '${patient.email.value}' already exist.`)
+            }
+            throw PatientCreateException.because(error.message)
+        }
         // console.log("QQQ::::::::", await this.query_click());
         // console.log("QQQ::::::::", await this.query_all());
-        // console.log("QQQ::::::::", this.db.create);
         // console.log("QQQ::::::::", await this.db2());
     }
 
     async getById(patientId: PatientId): Promise<Patient | undefined> {
-
-        const eventStream = EventStream.for<Patient>(Patient, patientId);
-        const patient = await this.patientSnapshotRepository.load(patientId);
-        const eventCursor = this.eventStore.getEvents(eventStream, {
-            fromVersion: patient.version + 1,
-        });
-        await patient.loadFromHistory(eventCursor);
-
-        if (patient.version < 1) {
-            return;
-        }
-        return patient;
+        const pgPatient: any = await this.db.findOneBy({ id: patientId.value, status: true })
+        return this.patientSnapshotRepository.deserialize(pgPatient);
     }
 
     async getByIds(patientIds: PatientId[]) {

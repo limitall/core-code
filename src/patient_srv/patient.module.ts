@@ -5,7 +5,7 @@ import { PatientService } from './patient.service';
 import { PatientController } from './patient.controller';
 import { resources } from './patient.resources';
 
-@Adit({ srvName: AditService.SrvNames.PATIENT_SRV, type: 'SrvModuleInit', resources })
+@Adit({ srvName: AditService.SrvNames.PATIENT_SRV, type: 'SrvModuleInit', resources, options: { typeormOptions: { synchronize: true } } })
 @Module({
   controllers: [PatientController],
   providers: [PatientService]
