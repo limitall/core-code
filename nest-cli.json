@@ -60,7 +60,7 @@
         "tsConfigPath": "libs/event/tsconfig.lib.json"
       }
     },
-    "module-registry": {
+    "method-registry": {
       "type": "library",
       "root": "libs/method-registry",
       "entryFile": "index",
