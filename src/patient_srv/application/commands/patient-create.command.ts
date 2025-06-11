@@ -1,9 +1,9 @@
-import { CommandHandler, type ICommand, type ICommandHandler } from '@limitall/core/event';
+import { CommandHandler, type ICommand, type ICommandHandler } from '@adit/core/event';
 import { Patient } from '../../domain/models';
 import { PatientRepository } from '../repositories';
 import { Email, PatientId, PatientName, PatientStatus } from '../../domain/value-objects';
 import { AditService } from '@adit/lib/adit';
-import { Adit, MB } from '@limitall/core/decorators';
+import { Adit, MB } from '@adit/core/decorators';
 
 export class PatientCreateCommand implements ICommand {
     constructor(public readonly payLoad: { name: string; email?: string; locId?: string; orgId?: string; }) { }

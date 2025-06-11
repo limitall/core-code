@@ -1,5 +1,5 @@
 import { ReflectionService } from '@grpc/reflection';
-import { SetMetadata } from '@limitall/core/common';
+import { SetMetadata } from '@adit/core/common';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import * as dotenv from 'dotenv';

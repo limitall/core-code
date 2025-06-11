@@ -1,4 +1,4 @@
-import { InvalidIdException } from "@limitall/core/event";
+import { InvalidIdException } from "@adit/core/event";
 import { isBoolean } from "class-validator";
 
 export class PatientStatus {

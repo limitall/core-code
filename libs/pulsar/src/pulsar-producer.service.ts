@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, OnModuleDestroy, OnModuleInit } from '@nest
 import { PULSAR_CLIENT } from './pulsar.constants';
 import { Client, Producer } from 'pulsar-client';
 import { isArray } from 'class-validator';
-import { MethodRegistry } from '@limitall/core/method-registry';
+import { MethodRegistry } from '@adit/core/method-registry';
 
 
 @Injectable()

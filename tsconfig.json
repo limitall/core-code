@@ -24,52 +24,52 @@
       "@adit/lib/adit/*": [
         "libs/adit/src/*"
       ],
-      "@limitall/core/clickhouse": [
+      "@adit/core/clickhouse": [
         "libs/clickhouse/src"
       ],
-      "@limitall/core/clickhouse/*": [
+      "@adit/core/clickhouse/*": [
         "libs/clickhouse/src/*"
       ],
-      "@limitall/core/common": [
+      "@adit/core/common": [
         "libs/common/src"
       ],
-      "@limitall/core/common/*": [
+      "@adit/core/common/*": [
         "libs/common/src/*"
       ],
-      "@limitall/core/decorators": [
+      "@adit/core/decorators": [
         "libs/decorators/src"
       ],
-      "@limitall/core/decorators/*": [
+      "@adit/core/decorators/*": [
         "libs/decorators/src/*"
       ],
-      "@limitall/core/event": [
+      "@adit/core/event": [
         "libs/event/src"
       ],
-      "@limitall/core/event/*": [
+      "@adit/core/event/*": [
         "libs/event/src/*"
       ],
-      "@limitall/core/method-registry": [
+      "@adit/core/method-registry": [
         "libs/method-registry/src"
       ],
-      "@limitall/core/method-registry/*": [
+      "@adit/core/method-registry/*": [
         "libs/method-registry/src/*"
       ],
-      "@limitall/core/postgre": [
+      "@adit/core/postgre": [
         "libs/postgre/src"
       ],
-      "@limitall/core/postgre/*": [
+      "@adit/core/postgre/*": [
         "libs/postgre/src/*"
       ],
-      "@limitall/core/pulsar": [
+      "@adit/core/pulsar": [
         "libs/pulsar/src"
       ],
-      "@limitall/core/pulsar/*": [
+      "@adit/core/pulsar/*": [
         "libs/pulsar/src/*"
       ],
-      "@limitall/core/util": [
+      "@adit/core/util": [
         "libs/util/src"
       ],
-      "@limitall/core/util/*": [
+      "@adit/core/util/*": [
         "libs/util/src/*"
       ]
     }

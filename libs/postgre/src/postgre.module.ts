@@ -4,7 +4,7 @@ import { RpcException } from '@nestjs/microservices';
 import { forRootAsyncOptionsType } from "./postgre.module.for-root-async-options.type";
 import { PostgreService } from './postgre.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { allEntities } from '@limitall/core/common';
+import { allEntities } from '@adit/core/common';
 
 let _refs;
 
@@ -63,6 +63,7 @@ export class PostgreModule {
               logging: "all",
               autoLoadEntities: true,
               synchronize: false,
+              ...typeormOptions
             }),
             inject: [ConfigService],
           }),

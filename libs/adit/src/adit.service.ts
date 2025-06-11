@@ -1,10 +1,10 @@
 import { Inject, Injectable, Logger, OnApplicationBootstrap } from '@nestjs/common';
-import { services, featurs, topicNames, GetMetadataKeys, GetMetadata } from '@limitall/core/common';
-import { CHClassRegistry, DBClassRegistry } from '@limitall/core/decorators';
+import { services, featurs, topicNames, GetMetadataKeys, GetMetadata } from '@adit/core/common';
+import { CHClassRegistry, DBClassRegistry } from '@adit/core/decorators';
 import { ModuleRef } from '@nestjs/core';
-import { PostgreService } from '@limitall/core/postgre';
+import { PostgreService } from '@adit/core/postgre';
 import { ObjectLiteral, Repository } from 'typeorm';
-import { ClickhouseService } from '@limitall/core/clickhouse';
+import { ClickhouseService } from '@adit/core/clickhouse';
 
 export type topicType = (typeof AditService.TopicNames)[keyof typeof AditService.TopicNames]
 @Injectable()

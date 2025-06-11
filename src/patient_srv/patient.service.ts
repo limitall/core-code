@@ -1,6 +1,6 @@
 
 import { Injectable } from '@nestjs/common';
-import { CommandBus, QueryBus } from '@limitall/core/event';
+import { CommandBus, QueryBus } from '@adit/core/event';
 import { PatientId } from './domain/value-objects';
 import { GetPatientByIdQuery } from './application/queries';
 import { PatientCreateCommand, PatientStatusChangeCommand, PatientUpdateCommand, PatientDeleteCommand } from './application/commands';

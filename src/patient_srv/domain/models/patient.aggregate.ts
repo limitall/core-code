@@ -1,4 +1,4 @@
-import { Aggregate, AggregateRoot, EventHandler } from '@limitall/core/event';
+import { Aggregate, AggregateRoot, EventHandler } from '@adit/core/event';
 import {
     PatientCreatedEvent,
     PatientUpdatedEvent,

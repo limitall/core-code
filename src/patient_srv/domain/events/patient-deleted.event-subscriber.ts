@@ -1,7 +1,7 @@
-import { type EventEnvelope, EventSubscriber, type IEventSubscriber } from '@limitall/core/event';
+import { type EventEnvelope, EventSubscriber, type IEventSubscriber } from '@adit/core/event';
 import { PatientDeletedEvent } from './patient-deleted.event';
 import { AditService } from '@adit/lib/adit';
-import { Adit } from '@limitall/core/decorators';
+import { Adit } from '@adit/core/decorators';
 
 @Adit({ srvName: AditService.SrvNames.PATIENT_SRV, type: 'RegisterEventSubscriber' })
 @EventSubscriber(PatientDeletedEvent)

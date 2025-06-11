@@ -1,4 +1,4 @@
-import { SetMetadata } from '@limitall/core/common';
+import { SetMetadata } from '@adit/core/common';
 import {
     SrvModuleInitHelper,
     registerEventHelper,

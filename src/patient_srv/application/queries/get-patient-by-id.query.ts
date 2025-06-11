@@ -1,10 +1,10 @@
-import { type IQuery, type IQueryHandler, QueryHandler } from '@limitall/core/event';
+import { type IQuery, type IQueryHandler, QueryHandler } from '@adit/core/event';
 import { PatientNotFoundException } from '../../domain/exceptions';
 import { PatientDto } from '../dtos';
 import { PatientRepository } from '../repositories';
 import { PatientId } from '../../domain/value-objects';
 import { AditService } from '@adit/lib/adit';
-import { Adit } from '@limitall/core/decorators';
+import { Adit } from '@adit/core/decorators';
 
 export class GetPatientByIdQuery implements IQuery {
     constructor(public readonly payload: { id: string }) { }

@@ -1,5 +1,5 @@
 import { Inject, Logger, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
-import { MethodRegistry } from '@limitall/core/method-registry';
+import { MethodRegistry } from '@adit/core/method-registry';
 import { Client, Consumer, ConsumerConfig, Message } from 'pulsar-client';
 import { PULSAR_CLIENT } from './pulsar.constants';
 import { nextTick } from 'process';

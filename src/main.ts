@@ -1,7 +1,7 @@
 
 import { Logger } from '@nestjs/common';
-import { GrpcServer } from '@limitall/core/decorators';
-import { GetMetadata } from '@limitall/core/common';
+import { GrpcServer } from '@adit/core/decorators';
+import { GetMetadata } from '@adit/core/common';
 import { AditService } from '@adit/lib/adit'
 import { AppModule } from './app.module';
 

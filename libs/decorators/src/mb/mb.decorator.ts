@@ -1,5 +1,5 @@
 // mb.decorator.ts
-import { MethodRegistry } from '@limitall/core/method-registry';
+import { MethodRegistry } from '@adit/core/method-registry';
 import { ConsumerRegistry } from './consumer.registry';
 
 export function MB(srvName: string): PropertyDecorator {

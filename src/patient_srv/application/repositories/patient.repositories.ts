@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { EventStore, EventStream } from '@limitall/core/event';
+import { EventStore, EventStream } from '@adit/core/event';
 import { Patient, PatientSnapshotRepository } from '../../domain/models';
 import { PatientId } from 'src/patient_srv/domain/value-objects';
 import { AditService, ObjectLiteral, Repository } from '@adit/lib/adit';
-import { Adit, CH, DB } from '@limitall/core/decorators';
+import { Adit, CH, DB } from '@adit/core/decorators';
 import { db_queries } from './db-raw.query';
 import { analytics_queries } from './analytics-raw.query';
 import { PatientCreateException } from 'src/patient_srv/domain/exceptions';
@@ -51,7 +51,6 @@ export class PatientRepository {
                 await this.patientSnapshotRepository.save(patient.id, patient);
             }
         } catch (error) {
-            console.log(error.code);
             if (error.code === '23505') {
                 throw PatientCreateException.because(`Patient with email : '${patient.email.value}' already exist.`)
             }

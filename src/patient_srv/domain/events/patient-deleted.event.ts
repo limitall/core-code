@@ -1,6 +1,6 @@
 import { AditService } from '@adit/lib/adit';
-import { Adit } from '@limitall/core/decorators';
-import { Event, type IEvent } from '@limitall/core/event';
+import { Adit } from '@adit/core/decorators';
+import { Event, type IEvent } from '@adit/core/event';
 
 @Adit({ srvName: AditService.SrvNames.PATIENT_SRV, type: 'RegisterEvent' })
 @Event('patient-deleted')

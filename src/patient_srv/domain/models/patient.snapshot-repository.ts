@@ -1,8 +1,8 @@
-import { type ISnapshot, Snapshot, SnapshotRepository } from '@limitall/core/event';
+import { type ISnapshot, Snapshot, SnapshotRepository } from '@adit/core/event';
 import { Patient } from './patient.aggregate';
 import { Email, PatientId, PatientName, PatientStatus } from '../value-objects';
 import { AditService } from '@adit/lib/adit';
-import { Adit } from '@limitall/core/decorators';
+import { Adit } from '@adit/core/decorators';
 
 @Adit({ srvName: AditService.SrvNames.PATIENT_SRV, type: 'RegisterSnapshotRepository' })
 @Snapshot(Patient, { name: 'patient', interval: 5 })

@@ -1,9 +1,9 @@
 import { DynamicModule, Global, Module, Type } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
-import { EventSourcingModule, PostgresEventStore, PostgresSnapshotStore } from '@limitall/core/event';
-import { PulsarModule } from '@limitall/core/pulsar';
-import { PostgreModule } from '@limitall/core/postgre';
-import { ClickHouseModule } from '@limitall/core/clickhouse';
+import { EventSourcingModule, PostgresEventStore, PostgresSnapshotStore } from '@adit/core/event';
+import { PulsarModule } from '@adit/core/pulsar';
+import { PostgreModule } from '@adit/core/postgre';
+import { ClickHouseModule } from '@adit/core/clickhouse';
 import { AditService } from './adit.service';
 import { forRootAsyncOptionsType } from './adit.module.for-root-async-options.type';
 
@@ -72,8 +72,6 @@ export class AditModule {
     }
     const { srvName } = _refs;
     const { resources, typeormOptions } = opt;
-
-    console.log("opt::::::::::::", opt);
     _refs.imports.push(
       PulsarModule.forRootAsync({ srvName, resources }),
       PostgreModule.forRootAsync({ srvName, resources, typeormOptions }),

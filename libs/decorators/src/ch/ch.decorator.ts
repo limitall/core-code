@@ -1,4 +1,4 @@
-import { SetMetadata } from "@limitall/core/common";
+import { SetMetadata } from "@adit/core/common";
 import { isObject } from "class-validator";
 
 //TODO : need to move this in commonregistyr like method registry.

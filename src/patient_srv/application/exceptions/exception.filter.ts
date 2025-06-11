@@ -1,6 +1,6 @@
 import { type ArgumentsHost, Catch } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
-import { DomainException } from '@limitall/core/event';
+import { DomainException } from '@adit/core/event';
 import { DomainHttpException } from './domain-http-exceptions';
 
 @Catch()

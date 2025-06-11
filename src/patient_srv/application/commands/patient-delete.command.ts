@@ -1,8 +1,8 @@
-import { CommandHandler, type ICommand, type ICommandHandler } from '@limitall/core/event';
+import { CommandHandler, type ICommand, type ICommandHandler } from '@adit/core/event';
 import { PatientRepository } from '../repositories';
 import { PatientId, PatientStatus } from '../../domain/value-objects';
 import { AditService } from '@adit/lib/adit';
-import { Adit } from '@limitall/core/decorators';
+import { Adit } from '@adit/core/decorators';
 import { PatientNotFoundException } from 'src/patient_srv/domain/exceptions';
 import { RpcException } from '@nestjs/microservices';
 

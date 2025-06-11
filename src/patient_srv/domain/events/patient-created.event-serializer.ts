@@ -1,8 +1,8 @@
-import type { IEventSerializer } from '@limitall/core/event';
-import type { IEventPayload } from '@limitall/core/event';
-import { EventSerializer } from '@limitall/core/event';
+import type { IEventSerializer } from '@adit/core/event';
+import type { IEventPayload } from '@adit/core/event';
+import { EventSerializer } from '@adit/core/event';
 import { PatientCreatedEvent } from './patient-created.event';
-import { Adit } from '@limitall/core/decorators';
+import { Adit } from '@adit/core/decorators';
 import { AditService } from '@adit/lib/adit';
 
 @Adit({ srvName: AditService.SrvNames.PATIENT_SRV, type: 'RegisterEventSerializer' })
