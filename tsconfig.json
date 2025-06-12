@@ -77,8 +77,5 @@
         "libs/adit/src/*"
       ]
     }
-  },
-  "include": [
-    "src/**/*"
-  ]
+  }
 }

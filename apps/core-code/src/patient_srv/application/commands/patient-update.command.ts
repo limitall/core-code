@@ -3,7 +3,7 @@ import { PatientRepository } from '../repositories';
 import { Email, PatientId, PatientName, PatientStatus } from '../../domain/value-objects';
 import { AditService } from '@adit/lib/adit';
 import { Adit } from '@adit/core/decorators';
-import { PatientNotFoundException } from 'src/patient_srv/domain/exceptions';
+import { PatientNotFoundException } from '../../domain/exceptions';
 import { isBoolean } from 'class-validator';
 
 export class PatientUpdateCommand implements ICommand {

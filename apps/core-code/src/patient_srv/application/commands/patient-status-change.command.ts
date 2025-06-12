@@ -3,7 +3,7 @@ import { PatientRepository } from '../repositories';
 import { PatientId, PatientStatus } from '../../domain/value-objects';
 import { AditService } from '@adit/lib/adit';
 import { Adit } from '@adit/core/decorators';
-import { PatientNotFoundException } from 'src/patient_srv/domain/exceptions';
+import { PatientNotFoundException } from '../../domain/exceptions';
 
 export class PatientStatusChangeCommand implements ICommand {
     constructor(public readonly payLoad: { id: string; status: boolean; }) { }
