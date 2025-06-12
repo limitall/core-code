@@ -6,17 +6,17 @@ import { AditService } from '@adit/lib/adit'
 import { AppModule } from './app.module';
 
 
-export class Patient {
+export class Adit {
   constructor() {
   }
 
-  @GrpcServer({ srvName: AditService.SrvNames.PATIENT_SRV, srvModule: AppModule })
+  @GrpcServer({ srvName: AditService.SrvNames.ADIT_SRV, srvModule: AppModule })
   static appServer(): any { }
 }
 
 async function bootstrap() {
-  (await Patient.appServer()).listen().then(() => {
-    Logger.log(GetMetadata(Patient, "GrpcServer", 'appServer'));
+  (await Adit.appServer()).listen().then(() => {
+    Logger.log(GetMetadata(Adit, "GrpcServer", 'appServer'));
   });
 }
 bootstrap();
