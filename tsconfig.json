@@ -22,12 +22,6 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@adit/lib/adit": [
-        "libs/adit/src"
-      ],
-      "@adit/lib/adit/*": [
-        "libs/adit/src/*"
-      ],
       "@adit/core/clickhouse": [
         "libs/clickhouse/src"
       ],
@@ -75,6 +69,12 @@
       ],
       "@adit/core/util/*": [
         "libs/util/src/*"
+      ],
+      "@adit/lib/adit": [
+        "libs/adit/src"
+      ],
+      "@adit/lib/adit/*": [
+        "libs/adit/src/*"
       ]
     }
   },
