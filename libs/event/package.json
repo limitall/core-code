@@ -1,0 +1,19 @@
+{
+    "name": "@adit/core-event",
+    "version": "1.0.0",
+    "main": "dist/index.js",
+    "types": "dist/types/index.d.ts",
+    "files": [
+        "dist/**/*"
+    ],
+    "scripts": {
+        "build:types": "tsc --emitDeclarationOnly --declaration -p tsconfig.lib.json",
+        "build:min": "esbuild src/index.ts --bundle --minify --minify-syntax --tree-shaking=true --platform=node --outfile=dist/index.js --external:@nestjs/* --external:kafkajs --external:ioredis --external:mqtt --external:nats --external:amqplib --external:amqp-connection-manager",
+        "build": "rm -rf dist && npm run build:types && npm run build:min",
+        "pack": "npm run build && npm pack"
+    },
+    "dependencies": {
+        "@ocoda/event-sourcing": "^2.1.3",
+        "@ocoda/event-sourcing-postgres": "^2.1.3"
+    }
+}

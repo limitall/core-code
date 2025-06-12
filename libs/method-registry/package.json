@@ -1,5 +1,5 @@
 {
-    "name": "@adit/core-util",
+    "name": "@adit/core-method-registry",
     "version": "1.0.0",
     "main": "dist/index.js",
     "types": "dist/types/index.d.ts",
@@ -12,8 +12,5 @@
         "build": "rm -rf dist && npm run build:types && npm run build:min",
         "pack": "npm run build && npm pack"
     },
-    "dependencies": {
-        "uid": "^2.0.0",
-        "uuid": "^9.0.0"
-    }
+    "dependencies": {}
 }

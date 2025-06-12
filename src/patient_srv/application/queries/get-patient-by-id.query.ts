@@ -1,4 +1,4 @@
-import { type IQuery, type IQueryHandler, QueryHandler } from '@adit/core/event';
+import { type IQuery, type IQueryHandler, QueryHandler } from "@adit/core-event";
 import { PatientNotFoundException } from '../../domain/exceptions';
 import { PatientDto } from '../dtos';
 import { PatientRepository } from '../repositories';

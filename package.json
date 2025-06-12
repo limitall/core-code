@@ -20,6 +20,10 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@adit/core-event": "file:libs/event/adit-core-event-v1.0.0.tgz",
+    "@adit/core-method-registry": "file:libs/method-registry/adit-core-method-registry-v1.0.0.tgz",
+    "@adit/core-pulsar": "file:libs/pulsar/adit-core-pulsar-v1.0.0.tgz",
+    "@adit/core-util": "file:libs/util/adit-core-util-v1.0.0.tgz",
     "@clickhouse/client": "^1.11.1",
     "@grpc/grpc-js": "^1.13.3",
     "@grpc/proto-loader": "^0.7.15",

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { EventStore, EventStream } from '@adit/core/event';
+import { EventStore, EventStream } from "@adit/core-event";
 import { Patient, PatientSnapshotRepository } from '../../domain/models';
 import { PatientId } from 'src/patient_srv/domain/value-objects';
 import { AditService, ObjectLiteral, Repository } from '@adit/lib/adit';

@@ -1,5 +1,5 @@
 import { HttpException as BaseHttpException, HttpException, HttpStatus } from '@nestjs/common';
-import type { DomainException } from '@adit/core/event';
+import type { DomainException } from "@adit/core-event";
 import { PatientNotFoundException } from '../../domain/exceptions';
 
 export class DomainHttpException extends BaseHttpException {

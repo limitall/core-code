@@ -1,4 +1,4 @@
-import { InvalidIdException } from "@adit/core/event";
+import { InvalidIdException } from "@adit/core-event";
 
 export class PatientName {
     constructor(public readonly value: string) {

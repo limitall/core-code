@@ -1,4 +1,4 @@
-import { EventEnvelope, EventPublisher, IEvent, type IEventPublisher } from '@adit/core/event';
+import { EventEnvelope, EventPublisher, IEvent, type IEventPublisher } from "@adit/core-event";
 import { MB } from '@adit/core/decorators';
 import { AditService, topicType } from '@adit/lib/adit';
 import { OnApplicationBootstrap } from '@nestjs/common';

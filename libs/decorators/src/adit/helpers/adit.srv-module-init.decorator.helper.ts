@@ -1,6 +1,6 @@
 import { AditModule } from '@adit/lib/adit';
 import { GetMetadata, SetMetadata } from '@adit/core/common';
-import { IEvent } from '@adit/core/event';
+import { IEvent } from "@adit/core-event";
 import { Type } from '@nestjs/common';
 import { SrvModuleInitHelperType } from './adit.srv-module-init.decorator.helper.type';
 

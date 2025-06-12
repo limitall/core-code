@@ -1,7 +1,7 @@
 import { DynamicModule, Global, Module, Type } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
-import { EventSourcingModule, PostgresEventStore, PostgresSnapshotStore } from '@adit/core/event';
-import { PulsarModule } from '@adit/core/pulsar';
+import { EventSourcingModule, PostgresEventStore, PostgresSnapshotStore } from "@adit/core-event";
+import { PulsarModule } from '@adit/core-pulsar';
 import { PostgreModule } from '@adit/core/postgre';
 import { ClickHouseModule } from '@adit/core/clickhouse';
 import { AditService } from './adit.service';

@@ -1,0 +1,26 @@
+{
+    "name": "@adit/core-pulsar",
+    "version": "1.0.0",
+    "main": "dist/index.js",
+    "types": "dist/types/index.d.ts",
+    "files": [
+        "dist/**/*"
+    ],
+    "scripts": {
+        "build:types": "tsc --emitDeclarationOnly --declaration -p tsconfig.lib.json",
+        "build:min": "esbuild src/index.ts --bundle --minify --minify-syntax --tree-shaking=true --platform=node --outfile=dist/index.js --external:@nestjs/* --external:aws-sdk --external:mock-aws-s3 --external:nock --external:@mapbox/node-pre-gyp",
+        "build": "rm -rf dist && npm run build:types && npm run build:min",
+        "pack": "npm run build && npm pack"
+    },
+    "dependencies": {
+        "pulsar-client": "^1.13.2",
+        "class-validator": "^0.14.2"
+    },
+    "binary": {
+        "module_name": "pulsar",
+        "module_path": "./lib/binding/",
+        "host": "https://archive.apache.org/dist/pulsar/pulsar-client-node/",
+        "remote_path": "pulsar-client-node-{version}",
+        "package_name": "napi-{platform}-{libc}-{arch}.tar.gz"
+    }
+}

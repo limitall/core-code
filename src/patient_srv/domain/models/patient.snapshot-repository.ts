@@ -1,4 +1,4 @@
-import { type ISnapshot, Snapshot, SnapshotRepository } from '@adit/core/event';
+import { type ISnapshot, Snapshot, SnapshotRepository } from "@adit/core-event";
 import { Patient } from './patient.aggregate';
 import { Email, PatientId, PatientName, PatientStatus } from '../value-objects';
 import { AditService } from '@adit/lib/adit';

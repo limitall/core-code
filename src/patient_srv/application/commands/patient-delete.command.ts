@@ -1,4 +1,4 @@
-import { CommandHandler, type ICommand, type ICommandHandler } from '@adit/core/event';
+import { CommandHandler, type ICommand, type ICommandHandler } from "@adit/core-event";
 import { PatientRepository } from '../repositories';
 import { PatientId, PatientStatus } from '../../domain/value-objects';
 import { AditService } from '@adit/lib/adit';
