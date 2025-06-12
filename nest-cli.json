@@ -25,13 +25,22 @@
         "tsConfigPath": "libs/adit/tsconfig.lib.json"
       }
     },
-    "appointment": {
+    "adit-api": {
       "type": "application",
-      "root": "apps/appointment",
+      "root": "apps/adit-api",
       "entryFile": "main",
-      "sourceRoot": "apps/appointment/src",
+      "sourceRoot": "apps/adit-api/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/appointment/tsconfig.app.json"
+        "tsConfigPath": "apps/adit-api/tsconfig.app.json"
+      }
+    },
+    "appointment_srv": {
+      "type": "application",
+      "root": "apps/appointment_srv",
+      "entryFile": "main",
+      "sourceRoot": "apps/appointment_srv/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/appointment_srv/tsconfig.app.json"
       }
     },
     "clickhouse": {
@@ -50,15 +59,6 @@
       "sourceRoot": "libs/common/src",
       "compilerOptions": {
         "tsConfigPath": "libs/common/tsconfig.lib.json"
-      }
-    },
-    "adit-api": {
-      "type": "application",
-      "root": "apps/adit-api",
-      "entryFile": "main",
-      "sourceRoot": "apps/adit-api/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/adit-api/tsconfig.app.json"
       }
     },
     "decorators": {
@@ -88,13 +88,13 @@
         "tsConfigPath": "libs/method-registry/tsconfig.lib.json"
       }
     },
-    "patient": {
+    "patient_srv": {
       "type": "application",
-      "root": "apps/patient",
+      "root": "apps/patient_srv",
       "entryFile": "main",
-      "sourceRoot": "apps/patient/src",
+      "sourceRoot": "apps/patient_srv/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/patient/tsconfig.app.json"
+        "tsConfigPath": "apps/patient_srv/tsconfig.app.json"
       }
     },
     "postgre": {
