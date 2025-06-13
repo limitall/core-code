@@ -22,7 +22,7 @@ export class PulsarModule {
   constructor() {
   }
   static async forRootAsync(options: forRootAsyncOptionsType): Promise<DynamicModule> {
-    const { srvName, resources } = options;
+    const { srvName, resources, pulsarOptions } = options;
     if (!srvName) {
       throw new RpcException(`SRV name can not be undefind`);
     }
@@ -40,7 +40,7 @@ export class PulsarModule {
             useFactory: (configService: ConfigService) =>
               new Client({
                 serviceUrl: configService.getOrThrow(`${srvName}_PULSAR_SERVICE_URL`),
-                ...options
+                ...pulsarOptions
               }),
             inject: [ConfigService],
           }

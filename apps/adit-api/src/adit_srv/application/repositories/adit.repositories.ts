@@ -3,7 +3,7 @@ import { EventStore, EventStream } from '@adit/core/event';
 import { Adit as ADV, AditSnapshotRepository } from '../../domain/models';
 import { AditService, ObjectLiteral, Repository } from '@adit/lib/adit';
 import { Adit, CH, DB } from '@adit/core/decorators';
-import { db_queries } from './db-raw.query';
+import { db_param_querie_type, db_querie_type, db_queries } from './db-raw.query';
 import { analytics_queries } from './analytics-raw.query';
 import { AditCreateException } from '../../domain/exceptions';
 import { AditId } from '../../domain/value-objects';
@@ -31,8 +31,13 @@ export class AditRepository {
     }
 
     @DB({ tblname: AditService.FeaturNames.ADIT_SRV_ADIT })
-    async query_all(): Promise<typeof db_queries[keyof typeof db_queries]> {
+    async query_all(): Promise<db_querie_type> {
         return db_queries.all
+    };
+
+    @DB({ tblname: AditService.FeaturNames.ADIT_SRV_ADIT })
+    async query_first10(): Promise<db_param_querie_type> {
+        return { query: db_queries.first10, param: { limit: 10 } }
     };
 
     @CH()
@@ -62,7 +67,7 @@ export class AditRepository {
     }
 
     async getById(aditId: AditId): Promise<ADV | undefined> {
-        const pgAdit: any = await this.db.findOneBy({ id: aditId.value, status: true })
+        const pgAdit: any = await this.db2.findOneBy({ id: aditId.value, status: true })
         return this.aditSnapshotRepository.deserialize(pgAdit);
     }
 

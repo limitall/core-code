@@ -13,7 +13,9 @@ export type allowedTypes = "CreateServer" |
     "RegisterEventSubscriber"
     ;
 export type optionsTypes = {
-
+    pulsarOptions?: any,
+    typeormOptions?: any,
+    clickHouseOptions?: any,
 }
 
 type featureTypes = (typeof AditService.FeaturNames)[keyof typeof AditService.FeaturNames][];

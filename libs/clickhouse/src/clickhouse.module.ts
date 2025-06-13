@@ -26,7 +26,6 @@ export class ClickHouseModule {
       throw new RpcException(`SRV name can not be undefind`);
     }
     if (!_refs) {
-      //TODO : need to update this hardcoded strings
       _refs = {
         module: RootCommonModule,
         imports: [ConfigModule],
@@ -37,16 +36,20 @@ export class ClickHouseModule {
           },
           {
             provide: CLICKHOUSE_CLIENT,
-            useFactory: (configService: ConfigService) => createClient({
-              url: 'https://xzsipibj08.ap-south-1.aws.clickhouse.cloud:8443',
-              username: 'default',
-              password: 'V6_8K~MH4BljO',
-              compression: {
-                request: true,
-                response: true,
-              },
-              database: 'default'
-            }),
+            useFactory: (configService: ConfigService) => {
+              const { srvName, resources, clickHouseOptions } = options;
+              return createClient({
+                url: configService.getOrThrow(`${srvName}_CH_URL`),
+                username: configService.getOrThrow(`${srvName}_CH_USER`),
+                password: configService.getOrThrow(`${srvName}_CH_PASS`),
+                database: configService.getOrThrow(`${srvName}_CH_DB`),
+                compression: {
+                  request: true,
+                  response: true,
+                },
+                ...clickHouseOptions
+              })
+            },
             inject: [ConfigService],
           }
         ],

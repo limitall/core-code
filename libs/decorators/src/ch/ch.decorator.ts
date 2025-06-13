@@ -1,14 +1,12 @@
 import { SetMetadata } from "@adit/core/common";
+import { CHClassRegistry } from "@adit/core/method-registry";
 import { isObject } from "class-validator";
-
-//TODO : need to move this in commonregistyr like method registry.
-export const CHClassRegistry = new Set<any>();
 
 export function CH(queries?: object): any {
     return (target: any, _key: string | symbol) => {
         if (isObject(target) && !_key) {
             SetMetadata('CH_queries', queries, target)
-            CHClassRegistry.add(target);
+            CHClassRegistry.register(target);
         } else {
             SetMetadata(`CH_${_key.toString()}`, undefined, target)
         }

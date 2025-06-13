@@ -1,13 +1,10 @@
-import { CommandHandler, type ICommand, type ICommandHandler } from '@adit/core/event';
-import { AditRepository } from '../repositories';
-import { AditId, AditStatus } from '../../domain/value-objects';
+import { CommandHandler, type ICommandHandler } from '@adit/core/event';
+import { AditRepository } from '../../repositories';
+import { AditId, AditStatus } from '../../../domain/value-objects';
 import { AditService } from '@adit/lib/adit';
 import { Adit } from '@adit/core/decorators';
-import { AditNotFoundException } from '../../domain/exceptions';
-
-export class AditStatusChangeCommand implements ICommand {
-    constructor(public readonly payLoad: { id: string; status: boolean; }) { }
-}
+import { AditNotFoundException } from '../../../domain/exceptions';
+import { AditStatusChangeCommand } from '../imp';
 
 @Adit({ srvName: AditService.SrvNames.ADIT_SRV, type: 'RegisterCommandHandler' })
 @CommandHandler(AditStatusChangeCommand)

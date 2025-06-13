@@ -26,7 +26,7 @@ export class PulsarProducerService implements OnModuleInit, OnModuleDestroy {
         }
     }
 
-    async produce(topic: string, message: object, key?: string) {
+    async produce(topic: string, message: object, key?: string, prop?: any) {
         const { resources } = this.options;
         if (!isArray(resources?.topics) || !resources.topics.includes(topic)) {
             throw new Error(`Topic : "${topic}" not listed in resources list`);
@@ -41,14 +41,14 @@ export class PulsarProducerService implements OnModuleInit, OnModuleDestroy {
             this.producers.set(topic, producer);
         }
         try {
-            // TODO : need to set it properly
+            const { source, type } = prop;
             await producer?.send({
                 data: Buffer.from(JSON.stringify(message)),
-                key: topic,
+                key: key || topic,
                 properties: {
                     key,
-                    source: 'nestjs',
-                    type: 'event',
+                    source: source || 'api',
+                    type: type || 'event',
                 },
             } as any);
         } catch (error) {

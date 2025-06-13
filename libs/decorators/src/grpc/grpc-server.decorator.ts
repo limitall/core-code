@@ -9,7 +9,6 @@ import { join } from 'path';
 import { serverOptions } from './serverOptions.type';
 import { RpcExceptionFilter } from './rpc-exception-filter';
 
-// TODO : need to remove process.env, paas this via midiator page 
 export const GrpcServer = (params: serverOptions): PropertyDecorator => {
     dotenv.config();
     return (target: any, _key?: string | symbol, descriptor?: TypedPropertyDescriptor<any>) => {

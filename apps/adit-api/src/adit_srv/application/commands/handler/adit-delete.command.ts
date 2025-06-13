@@ -1,14 +1,10 @@
-import { CommandHandler, type ICommand, type ICommandHandler } from '@adit/core/event';
-import { AditRepository } from '../repositories';
-import { AditId, AditStatus } from '../../domain/value-objects';
+import { CommandHandler, type ICommandHandler } from '@adit/core/event';
+import { AditRepository } from '../../repositories';
+import { AditId } from '../../../domain/value-objects';
 import { AditService } from '@adit/lib/adit';
 import { Adit } from '@adit/core/decorators';
-import { AditNotFoundException } from '../../domain/exceptions';
-import { RpcException } from '@nestjs/microservices';
-
-export class AditDeleteCommand implements ICommand {
-    constructor(public readonly payLoad: { id: string; }) { }
-}
+import { AditNotFoundException } from '../../../domain/exceptions';
+import { AditDeleteCommand } from '../imp';
 
 @Adit({ srvName: AditService.SrvNames.ADIT_SRV, type: 'RegisterCommandHandler' })
 @CommandHandler(AditDeleteCommand)
