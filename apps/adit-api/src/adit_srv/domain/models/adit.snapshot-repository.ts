@@ -1,8 +1,8 @@
 import { type ISnapshot, Snapshot, SnapshotRepository } from '@adit/core/event';
-import { Adit as ADV } from './adit.aggregate';
-import { Email, AditId, AditName, AditStatus } from '../value-objects';
 import { AditService } from '@adit/lib/adit';
 import { Adit } from '@adit/core/decorators';
+import { Adit as ADV } from './adit.aggregate';
+import { Email, AditId, AditName, AditStatus } from '../value-objects';
 
 @Adit({ srvName: AditService.SrvNames.ADIT_SRV, type: 'RegisterSnapshotRepository' })
 @Snapshot(ADV, { name: 'adit', interval: 5 })

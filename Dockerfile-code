@@ -1,0 +1,25 @@
+FROM node:lts-slim AS code
+
+# Install Unison + CLI tools
+RUN apt-get update 
+RUN apt-get install -y --no-install-recommends unison nano procps
+RUN rm -rf /var/lib/apt/lists/*
+
+WORKDIR /usr/src/app
+
+# Copy source and install global CLI tools
+COPY . .
+RUN npm install -g npm@latest nest-cli concurrently
+RUN npm install
+
+# Install and configure entrypoint
+RUN mv entrypoint.sh /usr/lib/entrypoint.sh
+RUN chmod +x /usr/lib/entrypoint.sh
+
+ENTRYPOINT ["/usr/lib/entrypoint.sh"]
+
+## command to  build 
+#  docker build -t adit-api-code -f Dockerfile-code .
+
+## command to run
+# docker run --rm -it --network host -e APP_NAMES=adit-api -v /opt/shree/my-api-code:/opt --name adit-api-code adit-api-code
