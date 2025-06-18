@@ -1,0 +1,7 @@
+
+// demo_srv/proto/demo_task.proto
+syntax = "proto3";
+
+package DEMO_SRV;
+
+import "../demo_task/proto/demo_task.proto";

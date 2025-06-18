@@ -16,7 +16,7 @@ let _refs;
   imports: [],
   exports: [AditService],
 })
-export class RootCommonModule { }
+export class Adit_RootCommonModule { }
 
 @Global()
 @Module({})
@@ -31,7 +31,7 @@ export class AditModule {
     if (!_refs) {
       _refs = {
         srvName,
-        module: RootCommonModule,
+        module: Adit_RootCommonModule,
         imports: [
           ConfigModule,
           EventSourcingModule.forRootAsync({

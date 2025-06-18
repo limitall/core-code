@@ -41,14 +41,13 @@ export class PulsarProducerService implements OnModuleInit, OnModuleDestroy {
             this.producers.set(topic, producer);
         }
         try {
-            const { source, type } = prop;
             await producer?.send({
                 data: Buffer.from(JSON.stringify(message)),
                 key: key || topic,
                 properties: {
                     key,
-                    source: source || 'api',
-                    type: type || 'event',
+                    source: prop?.source || 'api',
+                    type: prop?.type || 'event',
                 },
             } as any);
         } catch (error) {

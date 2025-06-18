@@ -1,0 +1,251 @@
+.
+├── Dockerfile-code
+├── README.md
+├── apps
+│   ├── adit-api
+│   │   ├── src
+│   │   │   ├── adit_srv
+│   │   │   │   ├── adit.controller.spec.ts
+│   │   │   │   ├── adit.controller.ts
+│   │   │   │   ├── adit.module.ts
+│   │   │   │   ├── adit.resources.ts
+│   │   │   │   ├── adit.service.spec.ts
+│   │   │   │   ├── adit.service.ts
+│   │   │   │   ├── application
+│   │   │   │   │   ├── commands
+│   │   │   │   │   │   ├── handler
+│   │   │   │   │   │   │   ├── adit-create.command.ts
+│   │   │   │   │   │   │   ├── adit-delete.command.ts
+│   │   │   │   │   │   │   ├── adit-status-change.command.ts
+│   │   │   │   │   │   │   ├── adit-update.command.ts
+│   │   │   │   │   │   │   └── index.ts
+│   │   │   │   │   │   ├── imp
+│   │   │   │   │   │   │   ├── adit-create.command-imp.ts
+│   │   │   │   │   │   │   ├── adit-delete.command-imp.ts
+│   │   │   │   │   │   │   ├── adit-status-change.command-imp.ts
+│   │   │   │   │   │   │   ├── adit-update.command.ts
+│   │   │   │   │   │   │   └── index.ts
+│   │   │   │   │   │   └── index.ts
+│   │   │   │   │   ├── dtos
+│   │   │   │   │   │   ├── adit-status-change.dto.ts
+│   │   │   │   │   │   ├── adit-update.dto.ts
+│   │   │   │   │   │   ├── adit.dto.ts
+│   │   │   │   │   │   └── index.ts
+│   │   │   │   │   ├── exceptions
+│   │   │   │   │   │   ├── domain-http-exceptions.ts
+│   │   │   │   │   │   ├── exception.filter.ts
+│   │   │   │   │   │   └── index.ts
+│   │   │   │   │   ├── publichers
+│   │   │   │   │   │   ├── custom.event-publisher.ts
+│   │   │   │   │   │   └── index.ts
+│   │   │   │   │   ├── queries
+│   │   │   │   │   │   ├── get-adit-by-id.query.ts
+│   │   │   │   │   │   └── index.ts
+│   │   │   │   │   └── repositories
+│   │   │   │   │       ├── adit.repositories.ts
+│   │   │   │   │       ├── analytics-raw.query.ts
+│   │   │   │   │       ├── db-raw.query.ts
+│   │   │   │   │       └── index.ts
+│   │   │   │   ├── domain
+│   │   │   │   │   ├── events
+│   │   │   │   │   │   ├── adit-created.event-serializer.ts
+│   │   │   │   │   │   ├── adit-created.event-subscriber.ts
+│   │   │   │   │   │   ├── adit-created.event.ts
+│   │   │   │   │   │   ├── adit-deleted.event-subscriber.ts
+│   │   │   │   │   │   ├── adit-deleted.event.ts
+│   │   │   │   │   │   ├── adit-status-changed.event.ts
+│   │   │   │   │   │   ├── adit-updated.event.ts
+│   │   │   │   │   │   └── index.ts
+│   │   │   │   │   ├── exceptions
+│   │   │   │   │   │   ├── adit-create.exception.ts
+│   │   │   │   │   │   ├── adit-not-found.exception.ts
+│   │   │   │   │   │   ├── adit-update.exception.ts
+│   │   │   │   │   │   ├── general.exception.ts
+│   │   │   │   │   │   └── index.ts
+│   │   │   │   │   ├── models
+│   │   │   │   │   │   ├── adit.aggregate.ts
+│   │   │   │   │   │   ├── adit.snapshot-repository.ts
+│   │   │   │   │   │   └── index.ts
+│   │   │   │   │   └── value-objects
+│   │   │   │   │       ├── adit-id.vo.ts
+│   │   │   │   │       ├── adit-name.vo.ts
+│   │   │   │   │       ├── adit-status.vo.ts
+│   │   │   │   │       ├── email.vo.ts
+│   │   │   │   │       └── index.ts
+│   │   │   │   └── proto
+│   │   │   │       └── adit_srv.proto
+│   │   │   ├── app.module.ts
+│   │   │   └── main.ts
+│   │   ├── test
+│   │   │   ├── app.e2e-spec.ts
+│   │   │   └── jest-e2e.json
+│   │   └── tsconfig.app.json
+│   ├── appointment_srv
+│   │   ├── src
+│   │   │   ├── appointment_srv.controller.spec.ts
+│   │   │   ├── appointment_srv.controller.ts
+│   │   │   ├── appointment_srv.module.ts
+│   │   │   ├── appointment_srv.service.ts
+│   │   │   └── main.ts
+│   │   ├── test
+│   │   │   ├── app.e2e-spec.ts
+│   │   │   └── jest-e2e.json
+│   │   └── tsconfig.app.json
+│   └── patient_srv
+│       ├── src
+│       │   ├── main.ts
+│       │   ├── patient_srv.controller.spec.ts
+│       │   ├── patient_srv.controller.ts
+│       │   ├── patient_srv.module.ts
+│       │   └── patient_srv.service.ts
+│       ├── test
+│       │   ├── app.e2e-spec.ts
+│       │   └── jest-e2e.json
+│       └── tsconfig.app.json
+├── dist
+│   ├── adit_srv
+│   │   └── proto
+│   │       └── adit_srv.proto
+│   ├── apps
+│   │   ├── adit-api
+│   │   │   ├── adit_srv
+│   │   │   │   └── proto
+│   │   │   │       └── adit_srv.proto
+│   │   │   └── main.js
+│   │   └── core-code
+│   │       ├── main.js
+│   │       └── patient_srv
+│   │           └── proto
+│   │               └── patient_srv.proto
+│   ├── main.js
+│   └── patient_srv
+│       └── proto
+├── docs
+│   └── libs
+│       └── decorators
+│           ├── ADIT_DECORATOR.md
+│           ├── CH_DECORATOR.md
+│           ├── DB_DECORATOR.md
+│           └── GRPC_SERVER_DECORATOR.md
+├── entrypoint.sh
+├── eslint.config.mjs
+├── libs
+│   ├── adit
+│   │   ├── src
+│   │   │   ├── adit.module.for-root-async-options.type.ts
+│   │   │   ├── adit.module.ts
+│   │   │   ├── adit.service.ts
+│   │   │   └── index.ts
+│   │   └── tsconfig.lib.json
+│   ├── clickhouse
+│   │   ├── src
+│   │   │   ├── clickhouse.constants.ts
+│   │   │   ├── clickhouse.module.for-root-async-options.type.ts
+│   │   │   ├── clickhouse.module.ts
+│   │   │   ├── clickhouse.service.ts
+│   │   │   └── index.ts
+│   │   └── tsconfig.lib.json
+│   ├── common
+│   │   ├── src
+│   │   │   ├── adit.feature-list.ts
+│   │   │   ├── adit.functions.ts
+│   │   │   ├── adit.service-list.ts
+│   │   │   ├── adit.topic-list.ts
+│   │   │   ├── entities
+│   │   │   │   ├── adit-srv
+│   │   │   │   │   ├── adit-status.enum.ts
+│   │   │   │   │   ├── adit.entity.ts
+│   │   │   │   │   └── index.ts
+│   │   │   │   ├── appointmnt-srv
+│   │   │   │   │   ├── appointment-slot.entity.ts
+│   │   │   │   │   └── index.ts
+│   │   │   │   ├── index.ts
+│   │   │   │   └── pateint-srv
+│   │   │   │       ├── index.ts
+│   │   │   │       ├── patient-status.enum.ts
+│   │   │   │       └── patient.entity.ts
+│   │   │   └── index.ts
+│   │   └── tsconfig.lib.json
+│   ├── decorators
+│   │   ├── src
+│   │   │   ├── adit
+│   │   │   │   ├── adit.decorator.ts
+│   │   │   │   ├── adit.decorator.type.ts
+│   │   │   │   ├── helpers
+│   │   │   │   │   ├── adit.register-command-handler.decorator.helper.ts
+│   │   │   │   │   ├── adit.register-command-handler.decorator.helper.type.ts
+│   │   │   │   │   ├── adit.register-event-serializer.decorator.helper.ts
+│   │   │   │   │   ├── adit.register-event-serializer.decorator.helper.type.ts
+│   │   │   │   │   ├── adit.register-event-subscriber.decorator.helper.ts
+│   │   │   │   │   ├── adit.register-event-subscriber.decorator.helper.type.ts
+│   │   │   │   │   ├── adit.register-event.decorator.helper.ts
+│   │   │   │   │   ├── adit.register-event.decorator.helper.type.ts
+│   │   │   │   │   ├── adit.register-query-handler.decorator.helper.ts
+│   │   │   │   │   ├── adit.register-query-handler.decorator.helper.type.ts
+│   │   │   │   │   ├── adit.register-repository.decorator.helper.ts
+│   │   │   │   │   ├── adit.register-repository.decorator.helper.type.ts
+│   │   │   │   │   ├── adit.register-snapshot-repository.decorator.helper.ts
+│   │   │   │   │   ├── adit.register-snapshot-repository.decorator.helper.type.ts
+│   │   │   │   │   ├── adit.srv-module-init.decorator.helper.ts
+│   │   │   │   │   ├── adit.srv-module-init.decorator.helper.type.ts
+│   │   │   │   │   └── index.ts
+│   │   │   │   └── index.ts
+│   │   │   ├── ch
+│   │   │   │   ├── ch.decorator.ts
+│   │   │   │   └── index.ts
+│   │   │   ├── db
+│   │   │   │   ├── db.decorator.ts
+│   │   │   │   └── index.ts
+│   │   │   ├── grpc
+│   │   │   │   ├── grpc-server.decorator.ts
+│   │   │   │   ├── index.ts
+│   │   │   │   ├── rpc-exception-filter.ts
+│   │   │   │   └── serverOptions.type.ts
+│   │   │   ├── index.ts
+│   │   │   └── mb
+│   │   │       ├── consumer.registry.ts
+│   │   │       ├── index.ts
+│   │   │       └── mb.decorator.ts
+│   │   └── tsconfig.lib.json
+│   ├── event
+│   │   ├── src
+│   │   │   └── index.ts
+│   │   └── tsconfig.lib.json
+│   ├── method-registry
+│   │   ├── src
+│   │   │   ├── ch-class-registry.ts
+│   │   │   ├── db-class-registry.ts
+│   │   │   ├── index.ts
+│   │   │   └── method-registry.ts
+│   │   └── tsconfig.lib.json
+│   ├── postgre
+│   │   ├── src
+│   │   │   ├── index.ts
+│   │   │   ├── postgre.constants.ts
+│   │   │   ├── postgre.module.for-root-async-options.type.ts
+│   │   │   ├── postgre.module.ts
+│   │   │   └── postgre.service.ts
+│   │   └── tsconfig.lib.json
+│   ├── pulsar
+│   │   ├── src
+│   │   │   ├── index.ts
+│   │   │   ├── pulsar-consumer.service.ts
+│   │   │   ├── pulsar-producer.service.ts
+│   │   │   ├── pulsar.constants.ts
+│   │   │   ├── pulsar.module.for-root-async-options.type.ts
+│   │   │   └── pulsar.module.ts
+│   │   └── tsconfig.lib.json
+│   └── util
+│       ├── src
+│       │   ├── index.ts
+│       │   ├── util.module.ts
+│       │   └── util.service.ts
+│       └── tsconfig.lib.json
+├── nest-cli.json
+├── nextjs-structure.txt
+├── package-lock.json
+├── package.json
+├── tsconfig.build.json
+└── tsconfig.json
+
+70 directories, 178 files

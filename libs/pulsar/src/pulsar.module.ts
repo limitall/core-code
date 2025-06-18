@@ -1,4 +1,4 @@
-import { DynamicModule, Global, Module } from '@nestjs/common';
+import { DynamicModule, Global, Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RpcException } from '@nestjs/microservices';
 import { Client } from 'pulsar-client';
@@ -14,7 +14,7 @@ let _refs;
   providers: [PulsarProducerService, PulsarConsumerService],
 
 })
-export class RootCommonModule { }
+export class EVS_RootCommonModule { }
 
 @Global()
 @Module({})
@@ -28,7 +28,7 @@ export class PulsarModule {
     }
     if (!_refs) {
       _refs = {
-        module: RootCommonModule,
+        module: EVS_RootCommonModule,
         imports: [ConfigModule],
         providers: [
           {
@@ -37,12 +37,29 @@ export class PulsarModule {
           },
           {
             provide: PULSAR_CLIENT,
-            useFactory: (configService: ConfigService) =>
-              new Client({
-                serviceUrl: configService.getOrThrow(`${srvName}_PULSAR_SERVICE_URL`),
-                ...pulsarOptions
-              }),
-            inject: [ConfigService],
+            useFactory: async (configService: ConfigService) => {
+              const logger: Logger = new Logger("PulsarModule");
+              const serviceUrl = configService.getOrThrow(`${srvName}_PULSAR_SERVICE_URL`);
+              try {
+                const client = new Client({
+                  serviceUrl,
+                  operationTimeoutSeconds: 30,
+                  ioThreads: 4,
+                  messageListenerThreads: 4,
+                  concurrentLookupRequest: 50000,
+                  log: (level, file, line, message) => {
+                    // logger.log(`[${level}] ${file}:${line} ${message}`);
+                  },
+                  ...pulsarOptions
+                });
+                logger.log(`Pulsar client created successfully`);
+                return client;
+              } catch (error) {
+                logger.error(`Pulsar connection attempt failed:`, error);
+                throw new Error(`Failed to connect to Pulsar :${error.message}`);
+              }
+            },
+            inject: [ConfigService]
           }
         ],
         exports: [PULSAR_CLIENT, PulsarProducerService, PulsarConsumerService],

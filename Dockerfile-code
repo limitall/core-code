@@ -19,7 +19,7 @@ RUN chmod +x /usr/lib/entrypoint.sh
 ENTRYPOINT ["/usr/lib/entrypoint.sh"]
 
 ## command to  build 
-#  docker build -t adit-api-code -f Dockerfile-code .
+#  docker build -t demo-api-code -f Dockerfile-code .
 
 ## command to run
-# docker run --rm -it --network host -e APP_NAMES=adit-api -v /opt/shree/my-api-code:/opt --name adit-api-code adit-api-code
+# docker run --rm -it --network host -e APP_NAMES=demo-api -v /opt/shree/my-api-code:/opt --name demo-api-code adit-api-code

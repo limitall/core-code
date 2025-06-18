@@ -1,3 +1,3 @@
-export * from './adit-srv';
-export * from './pateint-srv';
-export * from './appointmnt-srv';
+export * from './demo_srv';
+export * from './pateint_srv';
+export * from './appointmnt_srv';

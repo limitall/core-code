@@ -1,4 +1,4 @@
 export const featurs = {
-    ADIT_SRV_ADIT: `adit`,
+    DEMO_SRV_DEMO: `demo`,
     PATIENT_SRV_PATIENT: `patient`,
 } as const

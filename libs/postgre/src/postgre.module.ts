@@ -1,4 +1,4 @@
-import { DynamicModule, Global, Module } from '@nestjs/common';
+import { DynamicModule, Global, Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RpcException } from '@nestjs/microservices';
 import { forRootAsyncOptionsType } from "./postgre.module.for-root-async-options.type";
@@ -13,7 +13,7 @@ let _refs;
   providers: [PostgreService],
 
 })
-export class RootCommonModule { }
+export class PG_RootCommonModule { }
 
 @Global()
 @Module({})
@@ -26,8 +26,16 @@ export class PostgreModule {
       throw new RpcException(`SRV name can not be undefind`);
     }
     if (!_refs) {
+      const logger = new Logger(this.constructor.name)
+      const mySrvEntities: Array<any> = [];
+      allEntities.forEach(entity => {
+        if (entity.name.startsWith(srvName)) {
+          mySrvEntities.push(entity);
+          logger.verbose(`Load entity : ${entity.name}`)
+        }
+      });
       _refs = {
-        module: RootCommonModule,
+        module: PG_RootCommonModule,
         imports: [
           ConfigModule,
           TypeOrmModule.forRootAsync({
@@ -39,6 +47,7 @@ export class PostgreModule {
               const username = configService.get(`${srvName}_PG_W_USER`) || configService.getOrThrow(`${srvName}_PG_USER`);
               const password = configService.get(`${srvName}_PG_W_PASS`) || configService.getOrThrow(`${srvName}_PG_PASS`);
               const database = configService.get(`${srvName}_W_PG_DB`) || configService.getOrThrow(`${srvName}_PG_DB`);
+
               return {
                 type: 'postgres',
                 host,
@@ -75,8 +84,8 @@ export class PostgreModule {
             },
             inject: [ConfigService],
           }),
-          TypeOrmModule.forFeature(allEntities, 'C'),
-          TypeOrmModule.forFeature(allEntities, 'Q'),
+          TypeOrmModule.forFeature(mySrvEntities, 'C'),
+          TypeOrmModule.forFeature(mySrvEntities, 'Q'),
         ],
         providers: [
           {

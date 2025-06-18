@@ -1,19 +1,15 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/adit-api/src",
+  "sourceRoot": "apps/demo_srv/src",
   "compilerOptions": {
     "deleteOutDir": true,
     "webpack": true,
     "assets": [
-      "**/*.proto",
-      {
-        "include": "**/*.proto",
-        "outDir": "./dist"
-      }
+      "**/*.proto"
     ],
     "watchAssets": true,
-    "tsConfigPath": "apps/adit-api/tsconfig.app.json"
+    "tsConfigPath": "apps/demo_srv/tsconfig.app.json"
   },
   "projects": {
     "adit": {
@@ -25,13 +21,13 @@
         "tsConfigPath": "libs/adit/tsconfig.lib.json"
       }
     },
-    "adit-api": {
+    "demo_srv": {
       "type": "application",
-      "root": "apps/adit-api",
+      "root": "apps/demo_srv",
       "entryFile": "main",
-      "sourceRoot": "apps/adit-api/src",
+      "sourceRoot": "apps/demo_srv/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/adit-api/tsconfig.app.json"
+        "tsConfigPath": "apps/demo_srv/tsconfig.app.json"
       }
     },
     "appointment_srv": {
@@ -126,5 +122,5 @@
     }
   },
   "monorepo": true,
-  "root": "apps/adit-api"
+  "root": "apps/demo_srv"
 }
