@@ -18,7 +18,16 @@ export type optionsTypes = {
     clickHouseOptions?: any,
 }
 
-type featureTypes = (typeof AditService.FeaturNames)[keyof typeof AditService.FeaturNames][];
+// Base feature array type
+type baseFeatureTypes = (typeof AditService.FeaturNames)[keyof typeof AditService.FeaturNames][];
+
+// New feature types supporting both array and object formats
+type featureTypes =
+    | baseFeatureTypes  // Old format: array of features
+    | {                 // New format: object with read/write permissions
+        write?: baseFeatureTypes;
+        read?: baseFeatureTypes;
+    };
 
 export type AditDecoratorParamsType = {
     srvName: (typeof AditService.SrvNames)[keyof typeof AditService.SrvNames];
@@ -27,6 +36,7 @@ export type AditDecoratorParamsType = {
     resources?: {
         feature?: featureTypes;
         topics?: (typeof AditService.TopicNames)[keyof typeof AditService.TopicNames][];
+        allowRawQueryExecution?: boolean
     };
     appModule?: Module;
 };
