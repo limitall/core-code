@@ -1,10 +1,11 @@
 import { Entity, Column, PrimaryColumn, Index, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { IsEmail, IsAlphanumeric, Length, IsIn, IsOptional } from 'class-validator';
 import { AditStatus } from './demo-task-status.enum';
+import { BaseVersionedEntity } from '../base-versioned.entity';
 
 
 @Entity('demo')
-export class DEMO_SRV_demo {
+export class DEMO_SRV_demo extends BaseVersionedEntity {
     @PrimaryColumn('varchar')
     @IsAlphanumeric()
     @Length(8, 8)

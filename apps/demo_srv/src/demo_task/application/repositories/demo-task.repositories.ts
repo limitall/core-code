@@ -49,17 +49,12 @@ export class DemoRepository {
     async save(demotask: DemoTask): Promise<void> {
         try {
             const newDemoTask = this.db.create(this.demotaskSnapshotRepository.serialize(demotask));
-            // console.log("Evnts+++++:::::", newDemoTask);
             const result = await this.db.save(newDemoTask);
-            console.log("Result:::::", result);
             if (result === newDemoTask) {
+                const { version } = await this.db2.findOne({ where: { id: result.id }, select: { version: true } }) as any;
+                demotask.version = version;
                 const events = demotask.commit();
-                // console.log("Evnts:::::", events);
                 const stream = EventStream.for<DemoTask>(DemoTask, demotask.id);
-
-                console.log("stream:::::", stream);
-                const e = this.eventStore.getAllEnvelopes({ since: { year: 2000, month: 1 } })
-                console.log("demotask:::::", demotask.version, (await e.next()).value.length,);
                 await this.eventStore.appendEvents(stream, demotask.version, events);
                 await this.demotaskSnapshotRepository.save(demotask.id, demotask);
             }
@@ -75,7 +70,7 @@ export class DemoRepository {
     }
 
     async getById(demotaskId: DemoTaskId): Promise<DemoTask | undefined> {
-        const pgDemoTask: any = await this.db2.findOneBy({ id: demotaskId.value, status: true });
+        const pgDemoTask: any = await this.db2.findOneBy({ id: demotaskId.value, isDeleted: false });
 
         if (!pgDemoTask) {
             throw DemoTaskNotFoundException.withId(demotaskId);

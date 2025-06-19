@@ -1,14 +1,18 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource, ObjectLiteral, Repository } from 'typeorm';
+import { ExtensionManager } from './postgre.extension.mnager';
 
 @Injectable()
 export class PostgreService {
+    private readonly extensionmanager: ExtensionManager = new ExtensionManager();
     constructor(
         @Inject('CONFIG_OPTIONS') private options: Record<string, any>,
         @InjectDataSource('C') private readonly commandDataSource: DataSource,
-        @InjectDataSource('Q') private readonly queryDataSource: DataSource
-    ) { }
+        @InjectDataSource('Q') private readonly queryDataSource: DataSource,
+    ) {
+        this.extensionmanager.Init(commandDataSource)
+    }
 
     protected WRITE_METHODS = ['save', 'insert', 'update', 'remove', 'softRemove', 'recover'];
 

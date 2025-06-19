@@ -14,9 +14,7 @@ export class DemoTaskUpdateCommandHandler implements ICommandHandler {
 
     async execute(command: DemoTaskUpdateCommand): Promise<boolean> {
         const demotaskId = DemoTaskId.from(command.payLoad.id);
-        console.log("##########################", command, demotaskId);
         const demotask = await this.demoRepository.getById(demotaskId);
-        console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", demotask, demotaskId);
         if (!demotask) {
             throw DemoTaskNotFoundException.withId(demotaskId);
         }

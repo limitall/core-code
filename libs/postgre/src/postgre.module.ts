@@ -47,7 +47,6 @@ export class PostgreModule {
               const username = configService.get(`${srvName}_PG_W_USER`) || configService.getOrThrow(`${srvName}_PG_USER`);
               const password = configService.get(`${srvName}_PG_W_PASS`) || configService.getOrThrow(`${srvName}_PG_PASS`);
               const database = configService.get(`${srvName}_W_PG_DB`) || configService.getOrThrow(`${srvName}_PG_DB`);
-
               return {
                 type: 'postgres',
                 host,
@@ -59,6 +58,8 @@ export class PostgreModule {
                 logging: "all",
                 autoLoadEntities: true,
                 synchronize: false,
+                migrations: ['dist/migrations/*{.ts,.js}'],
+                migrationsRun: false, // Run manually or via CLI
                 ...typeormOptions
               }
             },
